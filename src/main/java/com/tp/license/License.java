@@ -19,3 +19,4 @@ public class License {
     public String getCategory() { return category; }
     public Long getExdate() { return exdate; }
 }
+

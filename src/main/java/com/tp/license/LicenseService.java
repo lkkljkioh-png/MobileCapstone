@@ -8,3 +8,4 @@ public class LicenseService {
 
     private final Map<Long,License> store = new HashMap<>();
 }
+
