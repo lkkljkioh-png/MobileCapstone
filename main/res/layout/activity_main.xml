@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ECEAF7"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp"
+        android:gravity="center_horizontal|center_vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_card"
+        android:paddingLeft="28dp"
+        android:paddingRight="28dp"
+        android:paddingTop="28dp"
+        android:paddingBottom="28dp">
+
+        <!-- 앱 타이틀 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_gravity="start"
+            android:background="@drawable/bg_chip"
+            android:paddingLeft="10dp"
+            android:paddingRight="14dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginBottom="16dp"
+            >
+
+            <View
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/bg_dot"
+                android:layout_marginEnd="6dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textColor="#6667AB"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                android:letterSpacing="0.04"
+                android:fontFamily="@font/capstonefont"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="자격증 다모아"
+            android:textColor="#2C2C5B"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:letterSpacing="-0.02"
+            android:layout_marginBottom="6dp"
+            android:fontFamily="@font/capstonefont"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="계속하려면 로그인하세요"
+            android:textColor="#A49FC4"
+            android:textSize="13sp"
+            android:layout_marginBottom="36dp"
+            android:fontFamily="@font/capstonefont"
+            />
+
+            <!-- 구분선 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0DCEF"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- 아이디 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E-mail"
+                android:textColor="#6667AB"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.12"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/capstonefont"
+                />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_input"
+                android:layout_marginBottom="20dp">
+
+                <EditText
+                    android:id="@+id/et_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="email@email.com"
+                    android:textColorHint="#C0BCDC"
+                    android:inputType="text"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:textColor="#2C2C5B"
+                    android:textSize="14sp"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/capstonefont"
+                   />
+            </FrameLayout>
+
+            <!-- 비밀번호 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="비밀번호"
+                android:textColor="#6667AB"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.12"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/capstonefont"
+                />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_input"
+                android:layout_marginBottom="8dp">
+
+                <EditText
+                    android:id="@+id/et_pw"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="비밀번호를 입력하세요"
+                    android:textColorHint="#C0BCDC"
+                    android:inputType="textPassword"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:textColor="#2C2C5B"
+                    android:textSize="14sp"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/capstonefont"
+                    />
+            </FrameLayout>
+
+            <!-- 비밀번호 찾기
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="비밀번호를 잊으셨나요?"
+                android:textColor="#6667AB"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/capstonefont"
+                /> -->
+
+        </LinearLayout>
+
+        <!-- 로그인 버튼 -->
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:text="계속"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.02"
+            android:background="@drawable/bg_button_primary"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/capstonefont"
+            />
+
+        <!-- 회원가입 링크 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="계정이 없으신가요?"
+                android:textColor="#B0ACCE"
+                android:textSize="13sp"
+                android:fontFamily="@font/capstonefont"
+                />
+
+            <TextView
+                android:id="@+id/tv_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  회원가입 하기"
+                android:textColor="#6667AB"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/capstonefont"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
