@@ -8,5 +8,25 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/bottom_nav_text_size</item>
     </style>
+    <!-- 달력 요일 헤더 셀 스타일 -->
+    <style name="CalendarDayHeader">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/maintext_black</item>
+    </style>
+    <!-- 미니 캘린더 요일 헤더 스타일 (MY 탭) -->
+    <style name="MiniCalendarDayHeader">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/maintext_black</item>
+    </style>
 
 </resources>

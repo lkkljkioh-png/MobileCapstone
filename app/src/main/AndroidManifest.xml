@@ -21,6 +21,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".CertificateListActivity" />
+        <activity android:name=".CalendarActivity" />
+        <activity android:name=".MyActivity" />
+        <activity android:name=".FavoriteListActivity" />
+        <activity android:name=".CategoryListActivity" />
     </application>
 
 

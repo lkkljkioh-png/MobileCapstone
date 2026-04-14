@@ -5,5 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.TeamProject5" parent="Base.Theme.TeamProject5" />
+    <style name="Theme.TeamProject5" parent="Base.Theme.TeamProject5">
+        <item name="android:fontFamily">@font/chosun_sg</item>
+    </style>
 </resources>

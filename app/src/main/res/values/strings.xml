@@ -34,5 +34,13 @@
 
     <string name="nav_home">홈</string>
     <string name="nav_list">목록</string>
+    <string name="nav_calendar">캘린더</string>
+    <string name="calendar_title">캘린더</string>
+    <string name="prev_month">이전 달</string>
     <string name="nav_my">MY</string>
+    <string name="my_title">MY</string>
+    <string name="my_profile_default_name">user_name</string>
+    <string name="my_favorite_section">즐겨찾기한 자격증</string>
+    <string name="my_favorite_empty">즐겨찾기한 자격증이 없어요.</string>
+    <string name="my_go_calendar">캘린더 보기</string>
 </resources>

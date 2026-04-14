@@ -24,7 +24,7 @@ public class CertificateListActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_certificate_list);
 
-        repository = new CertificateRepository();
+        repository = new CertificateRepository(this);
 
         initViews();
         loadCertificates();
