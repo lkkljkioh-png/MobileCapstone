@@ -1,11 +1,14 @@
 package com.tp.user;
 
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class UserService {
 
-    private final Map<String, UserApplication> store = new HashMap<>();
+    private final Map<String, User> store = new HashMap<>();
     private long sequence = 0L;
 
     public User join(String id,String name) {

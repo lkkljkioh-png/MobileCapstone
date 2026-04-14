@@ -1,18 +1,22 @@
 package com.tp.license;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class LicenseService {
 
-    private static final Map<Long,License> store = new HashMap<>();
+    @Autowired
+    private LicenseRepository licenseRepository;
 
-    public static List<License> showLicense() {
-
-        return new ArrayList<>(store.values()); //저장된 데이터들을 꺼내서 반환
+    public List<License> showLicense() {
+        return licenseRepository.findAll(); //저장된 데이터들 반환
     }
 }
 

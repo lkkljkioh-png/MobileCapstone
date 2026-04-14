@@ -1,13 +1,13 @@
-package com.tp.license;
+package com.tp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LicenseApplication {
+public class appApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LicenseApplication.class, args);
+		SpringApplication.run(appApplication.class, args);
 	}
 
 }
