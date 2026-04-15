@@ -253,7 +253,7 @@ public class CalendarFragment extends Fragment {
                 + parts[2].replaceFirst("^0", "") + "일 시험";
         tvSelectedDate.setText(label);
 
-        // 기존 자격증 카드 제거 (헤더 TextView + 구분선 2개는 유지)
+        // 기존 자격증 카드 제거
         int keepCount = 2;
         int total = layoutCertList.getChildCount();
         if (total > keepCount) {

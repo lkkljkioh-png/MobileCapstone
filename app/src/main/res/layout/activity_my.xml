@@ -57,7 +57,7 @@
                     android:id="@+id/tv_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="user_name 님"
+                    android:text="사용자 님"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="#222222" />

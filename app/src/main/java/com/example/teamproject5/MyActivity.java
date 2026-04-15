@@ -28,7 +28,8 @@ import java.util.Map;
  *                  → 화살표 버튼 클릭 시 CalendarActivity로 이동
  *
  * 백엔드 연동 포인트:
- *  - renderUserName(): 로그인된 사용자 이름 API로 교체
+ *  - renderUserName(): 현재는 SharedPreferences에서 로그인 이름 표시
+ *                      백엔드 연동 시 사용자 프로필 API 응답으로 교체
  *  - renderFavoriteList(): 서버 즐겨찾기 목록 API로 교체
  */
 public class MyActivity extends AppCompatActivity {
@@ -133,11 +134,14 @@ public class MyActivity extends AppCompatActivity {
 
     /**
      * 사용자 이름 표시
-     * 백엔드 연동 시: 로그인 API 응답으로 교체하세요.
+     * 현재는 LoginActivity에서 저장한 SharedPreferences 값을 읽어 표시
+     * 백엔드 연동 시: 사용자 프로필 API 응답값으로 교체하세요.
      */
     private void renderUserName() {
-        // TODO: 백엔드 연동 후 실제 사용자 이름으로 교체 (현재는 하드코딩)
-        String userName = "user_name";
+        // 현재는 SharedPreferences에 저장된 로그인 이름 사용
+        // 백엔드 연동 시 사용자 프로필 API 응답값으로 교체
+        String userName = getSharedPreferences("user_prefs", MODE_PRIVATE)
+                .getString("user_name", "사용자");
         tvUserName.setText(userName + " 님");
     }
 
