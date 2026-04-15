@@ -28,8 +28,8 @@ import java.util.Map;
  *                  → 화살표 버튼 클릭 시 CalendarActivity로 이동
  *
  * 백엔드 연동 포인트:
- *  - loadUserName(): 로그인된 사용자 이름 API로 교체
- *  - loadFavorites(): 서버 즐겨찾기 목록 API로 교체
+ *  - renderUserName(): 로그인된 사용자 이름 API로 교체
+ *  - renderFavoriteList(): 서버 즐겨찾기 목록 API로 교체
  */
 public class MyActivity extends AppCompatActivity {
 
@@ -37,12 +37,12 @@ public class MyActivity extends AppCompatActivity {
     private static final int MAX_FAVORITE_DISPLAY = 3; // 즐겨찾기 최대 표시 개수
 
     // ── Views ──────────────────────────────────────────────────────────────
-    private TextView tvUserName;
-    private LinearLayout layoutFavoriteList;
-    private ImageButton btnGoFavorite;
-    private ImageButton btnGoCalendar;
-    private TextView tvMiniYearMonth;
-    private GridLayout gridMiniCalendar;
+    private TextView tvUserName; // 상단 프로필 영역 — "OO 님" 형태로 로그인한 사용자 이름 표시
+    private LinearLayout layoutFavoriteList; // 즐겨찾기 자격증 카드 목록을 동적으로 추가하는 컨테이너 (최대 3개)
+    private ImageButton btnGoFavorite; // 즐겨찾기 전체 목록으로 이동하는 화살표 버튼 → FavoriteListActivity
+    private ImageButton btnGoCalendar; // 캘린더 전체 화면으로 이동하는 화살표 버튼 → CalendarActivity
+    private TextView tvMiniYearMonth; // 미니 캘린더 상단 — 현재 년/월 표시 (예: "2026년 4월")
+    private GridLayout gridMiniCalendar; // 미니 캘린더 본체 — 이번 달 날짜 셀을 동적으로 그리는 7열 그리드
 
     // ── Data ───────────────────────────────────────────────────────────────
     private CertificateRepository repository;
@@ -64,6 +64,7 @@ public class MyActivity extends AppCompatActivity {
 
     /**
      * onResume: 다른 화면에서 즐겨찾기 변경 후 돌아올 때 자동 갱신
+     * (예: 자격증 목록에서 즐겨찾기 변경 → 뒤로가기 → MY 화면 최신 상태 반영)
      */
     @Override
     protected void onResume() {
@@ -89,8 +90,8 @@ public class MyActivity extends AppCompatActivity {
     }
 
     /**
-     * 즐겨찾기 + examDate 있는 자격증만 날짜별 Map으로 구성
-     * 백엔드 연동 시 이 메서드를 수정
+     * 즐겨찾기 + examDate 있는 자격증만 날짜별 Map으로 구성합니다.
+     * 백엔드 연동 시 이 메서드를 수정하세요.
      */
     private void buildFavoriteDateMap() {
         favoriteDateMap = new HashMap<>();
@@ -132,16 +133,17 @@ public class MyActivity extends AppCompatActivity {
 
     /**
      * 사용자 이름 표시
-     * 백엔드 연동 시: SharedPreferences 또는 로그인 API 응답으로 교체하세요.
+     * 백엔드 연동 시: 로그인 API 응답으로 교체하세요.
      */
     private void renderUserName() {
-        // TODO: 백엔드 연동 후 실제 사용자 이름으로 교체
+        // TODO: 백엔드 연동 후 실제 사용자 이름으로 교체 (현재는 하드코딩)
         String userName = "user_name";
         tvUserName.setText(userName + " 님");
     }
 
     /**
      * 즐겨찾기 자격증 목록 표시 (최대 3개)
+     * 추후 보완 예정
      */
     private void renderFavoriteList() {
         List<Certificate> allList = repository.getCertificates();
@@ -174,10 +176,15 @@ public class MyActivity extends AppCompatActivity {
             TextView tvCategory = itemView.findViewById(R.id.tv_fav_category);
 
             tvName.setText(cert.getName());
-            tvCategory.setText(cert.getCategory());
+            tvCategory.setText(CategoryUtils.toLabel(cert.getCategory()));
 
-            // TODO: 상세 페이지 구현 후 클릭 리스너 연결
-            // itemView.setOnClickListener(v -> navigateToDetail(cert));
+            // 즐겨찾기 카드 클릭 → DetailActivity로 이동
+            itemView.setOnClickListener(v -> {
+                android.content.Intent intent = new android.content.Intent(MyActivity.this, DetailActivity.class);
+                intent.putExtra("cert_name", cert.getName());
+                intent.putExtra("cert_id", cert.getId());
+                startActivity(intent);
+            });
 
             layoutFavoriteList.addView(itemView);
         }
@@ -186,9 +193,9 @@ public class MyActivity extends AppCompatActivity {
     // ── 미니 캘린더 렌더링 ─────────────────────────────────────────────────
 
     /**
-     * 이번 달 기준 미니 캘린더를 그립니다.
-     * 즐겨찾기 자격증 시험일에만 원형 표시(dot)를 보여줍니다.
-     * 날짜 클릭 등 상세 기능은 CalendarActivity에서 제공합니다.
+     * 이번 달 기준 미니 캘린더를 그림
+     * 즐겨찾기 자격증 시험일에만 원형 표시(dot)를 그림
+     * 날짜 클릭 등 상세 기능은 CalendarActivity에서 제공
      */
     private void renderMiniCalendar() {
         Calendar cal = Calendar.getInstance();

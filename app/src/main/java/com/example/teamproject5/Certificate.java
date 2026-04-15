@@ -14,12 +14,10 @@ public class Certificate {
     private boolean favorite;
     private final String examDate; // "yyyy-MM-dd" 형식, 없으면 null
 
-    // 기존 생성자 유지 (하위 호환)
     public Certificate(int id, String name, String description, String category, boolean favorite) {
         this(id, name, description, category, favorite, null);
     }
 
-    // examDate 포함 생성자
     public Certificate(int id, String name, String description, String category, boolean favorite, String examDate) {
         this.id = id;
         this.name = name;

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--자격증 리스트 각 아이템의 "보러가기" 버튼 배경-->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/primary_blue" />
     <corners android:radius="20dp"/>

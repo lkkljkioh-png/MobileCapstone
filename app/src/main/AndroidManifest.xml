@@ -25,6 +25,7 @@
         <activity android:name=".MyActivity" />
         <activity android:name=".FavoriteListActivity" />
         <activity android:name=".CategoryListActivity" />
+        <activity android:name=".DetailActivity" />
     </application>
 
 

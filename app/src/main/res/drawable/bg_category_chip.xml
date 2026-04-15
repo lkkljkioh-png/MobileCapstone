@@ -1,5 +1,9 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--    item_certificate.xml에서 사용.
+       자격증 리스트 각 아이템의 카테고리 태그(예: "IT·기술") 배경으로 사용 -->
 
     <solid android:color="@color/background_white" />
 

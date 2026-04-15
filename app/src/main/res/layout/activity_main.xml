@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    홈 화면 레이아웃 (activity_main.xml)
+
+    구조:
+      DrawerLayout
+       ├── layout_main_content  : 실제 홈 화면 콘텐츠 (검색창, 카테고리, 자격증 목록 등)
+       └── layout_side_menu     : 오른쪽에서 슬라이드되는 사이드 메뉴 (홈 / 목록 / MY)
+
+    사이드 메뉴 동작:
+      - android:layout_gravity="end" → 오른쪽에서 슬라이드
+      - 열기  : MainActivity.btnMenu 클릭 → drawerLayout.openDrawer(GravityCompat.END)
+      - 닫기  : 메뉴 닫기 버튼 또는 뒤로가기 → drawerLayout.closeDrawer(GravityCompat.END)
+-->
+
 <androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawerLayout"

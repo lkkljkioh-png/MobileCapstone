@@ -1,5 +1,6 @@
 package com.example.teamproject5;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -60,6 +61,9 @@ public class CategoryListActivity extends AppCompatActivity
         }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // 뒤로가기 버튼
+        android.widget.TextView btnBack = findViewById(R.id.btn_back);
+        if (btnBack != null) btnBack.setOnClickListener(v -> finish());
 
         // 상단 타이틀을 카테고리 이름으로 설정
         android.widget.TextView tvTitle = findViewById(R.id.tv_category_list_title);
@@ -118,11 +122,9 @@ public class CategoryListActivity extends AppCompatActivity
 
     @Override
     public void onDetailClick(Certificate certificate) {
-        Toast.makeText(this, certificate.getName() + " 상세 페이지로 이동", Toast.LENGTH_SHORT).show();
-
-        // 상세 화면 구현 후 아래 주석 해제
-        // Intent intent = new Intent(this, CertificateDetailActivity.class);
-        // intent.putExtra("certificate_id", certificate.getId());
-        // startActivity(intent);
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("cert_name", certificate.getName());
+        intent.putExtra("cert_id", certificate.getId());
+        startActivity(intent);
     }
 }

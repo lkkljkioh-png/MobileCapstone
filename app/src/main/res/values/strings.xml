@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">CertApp</string>
+    <string name="app_name">자격증 다모아</string>
 
-    <string name="app_title">자격증모아</string>
+    <string name="app_title">자격증 다모아</string>
     <string name="cert_name_ex">자격증명 예시</string>
     <string name="cert_recent_title">최근 본 자격증</string>
     <string name="category_name_ex">카테고리명 예시</string>

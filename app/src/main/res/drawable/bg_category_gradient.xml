@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
+<!--홈 화면 카테고리 버튼 6개의 배경 — 그라데이션 효과-->
     <gradient
         android:startColor="@color/primary_blue"
         android:endColor="@color/deco_violet"

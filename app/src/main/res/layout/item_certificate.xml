@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- 자격증 리스트에 뜨는
+ 자격증 카드 개별 레이아웃-->
+
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -39,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp">
 
-            <ImageButton
+            <TextView
                 android:id="@+id/btnFavorite"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -47,8 +51,10 @@
                 android:layout_alignParentTop="true"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/favorite_title"
-                android:padding="4dp"
-                android:src="@android:drawable/btn_star_big_off" />
+                android:gravity="center"
+                android:textSize="24sp"
+                android:textColor="@color/deco_violet"
+                android:text="♡" />
 
             <TextView
                 android:id="@+id/tvName"

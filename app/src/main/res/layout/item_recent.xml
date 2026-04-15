@@ -1,3 +1,5 @@
+<!-- 최근 본 자격증 레이아웃 (아직 기능 미구현) -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

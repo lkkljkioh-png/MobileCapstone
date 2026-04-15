@@ -24,7 +24,6 @@ import java.util.Map;
 /**
  * 캘린더 탭 Fragment
  *
- * 역할:
  *  - 월 단위 달력 표시 (좌우 화살표로 월 이동)
  *  - 즐겨찾기한 자격증의 examDate가 있는 날짜에 점(dot) 표시
  *  - 날짜 셀 클릭 → 해당 날의 자격증 목록 표시
@@ -35,7 +34,7 @@ import java.util.Map;
  */
 public class CalendarFragment extends Fragment {
 
-    // ── Views ──────────────────────────────────────────────────────────────
+    // ── Views ──
     private TextView tvYearMonth;
     private ImageButton btnPrevMonth;
     private ImageButton btnNextMonth;
@@ -43,7 +42,7 @@ public class CalendarFragment extends Fragment {
     private LinearLayout layoutCertList;  // 선택된 날짜의 자격증 목록 컨테이너
     private TextView tvSelectedDate;
 
-    // ── Data ───────────────────────────────────────────────────────────────
+    // ── Data ──
     private Calendar currentCalendar;
 
     /**
@@ -54,13 +53,12 @@ public class CalendarFragment extends Fragment {
 
     private CertificateRepository repository;
 
-    // ── Fragment 생성 ──────────────────────────────────────────────────────
-
+    // ── Fragment 생성 ───
     public static CalendarFragment newInstance() {
         return new CalendarFragment();
     }
 
-    // ── Lifecycle ──────────────────────────────────────────────────────────
+    // ── Lifecycle ───
 
     @Nullable
     @Override
@@ -92,7 +90,7 @@ public class CalendarFragment extends Fragment {
         }
     }
 
-    // ── 초기화 ─────────────────────────────────────────────────────────────
+    // ── 초기화 ──
 
     private void initViews(View view) {
         tvYearMonth    = view.findViewById(R.id.tv_year_month);
@@ -143,7 +141,7 @@ public class CalendarFragment extends Fragment {
         });
     }
 
-    // ── 달력 렌더링 ────────────────────────────────────────────────────────
+    // ── 달력 렌더링 ──
 
     private void renderCalendar() {
         int year  = currentCalendar.get(Calendar.YEAR);
@@ -222,7 +220,7 @@ public class CalendarFragment extends Fragment {
             tvDay.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
         }
 
-        // 날짜 클릭 → 자격증 목록 표시 (dot 없는 날은 목록 닫기)
+        // 날짜 클릭 → 자격증 목록 표시
         cellView.setOnClickListener(v -> {
             if (hasCert) {
                 showCertListForDate(dateKey, certsOnDay);
@@ -244,7 +242,7 @@ public class CalendarFragment extends Fragment {
         return params;
     }
 
-    // ── 자격증 목록 표시 ───────────────────────────────────────────────────
+    // ── 자격증 목록 표시 ──
 
     private void showCertListForDate(String dateKey, List<Certificate> certs) {
         layoutCertList.setVisibility(View.VISIBLE);
@@ -271,7 +269,7 @@ public class CalendarFragment extends Fragment {
             TextView tvCategory = itemView.findViewById(R.id.tv_cert_category);
 
             tvName.setText(cert.getName());
-            tvCategory.setText(cert.getCategory());
+            tvCategory.setText(CategoryUtils.toLabel(cert.getCategory()));
 
             // 자격증 카드 클릭 → DetailActivity로 이동
             itemView.setOnClickListener(v -> navigateToDetail(cert));
@@ -290,12 +288,13 @@ public class CalendarFragment extends Fragment {
     }
 
     /**
-     * 자격증 카드 클릭 시 DetailActivity로 이동합니다.
-     * cert_name을 Intent로 전달합니다.
+     * 자격증 카드 클릭 시 DetailActivity로 이동
+     * cert_name과 cert_id를 Intent로 전달합니다.
      */
     private void navigateToDetail(Certificate cert) {
         Intent intent = new Intent(requireContext(), DetailActivity.class);
         intent.putExtra("cert_name", cert.getName());
+        intent.putExtra("cert_id", cert.getId());
         startActivity(intent);
     }
 

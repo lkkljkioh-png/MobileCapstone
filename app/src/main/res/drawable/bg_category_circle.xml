@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--layout_main_content.xml에서 홈 화면 카테고리 버튼 6개의 아이콘 원형 배경으로 사용-->
+
     <solid android:color="@color/background_white"/>
     <corners android:radius="20dp"/>
 </shape>
