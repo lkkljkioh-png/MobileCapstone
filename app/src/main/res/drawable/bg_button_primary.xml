@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--회원가입 / 로그인 창 버튼-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:startColor="#6667AB"
+        android:endColor="#6667AB"
+        android:angle="135"/>
+    <corners android:radius="16dp"/>
+</shape>

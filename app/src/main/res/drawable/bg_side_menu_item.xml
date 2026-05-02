@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 사이드 메뉴 항목(홈 / 목록 / MY) 각각의 배경-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="#EEF4FF" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <solid android:color="#F7F9FC" />
+            <corners android:radius="16dp" />
+        </shape>
+    </item>
+
+</selector>

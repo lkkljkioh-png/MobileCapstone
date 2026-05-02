@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    MY 탭 미니 캘린더 날짜 셀
+    - tv_mini_day: 날짜 숫자
+    - view_mini_dot: 시험일 표시 점
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="36dp"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/tv_mini_day"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:gravity="center"
+        android:textSize="11sp"
+        android:textColor="#333333" />
+
+    <View
+        android:id="@+id/view_mini_dot"
+        android:layout_width="4dp"
+        android:layout_height="4dp"
+        android:background="@drawable/bg_calendar_dot"
+        android:visibility="gone" />
+
+</LinearLayout>
