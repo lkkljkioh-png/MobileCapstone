@@ -13,6 +13,6 @@ public class LicenseController {
     private LicenseService licenseService;
 
     @GetMapping("/license"/*여기 주소로 오는 사용자에게 자격증 목록을 보여줌*/)
-    public List<License> showLicense() { return licenseService.showLicense(); }
+    public List<License> showLicense() {
+ return licenseService.showLicense(); }
 }
-

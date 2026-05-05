@@ -8,13 +8,17 @@ import java.util.Map;
 @Service
 public class UserService {
 
-    private final Map<String, User> store = new HashMap<>();
-    private long sequence = 0L;
+    private final UserRepository userRepository;
 
-    public User join(String id,String name) {
-        sequence++;
-        User user = new User(sequence, id, name); // user객체 생성
-        store.put(user.getId(), user); // 저장소에 보관
-        return user;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public User join(String id, String name) {
+        User user = new User();
+        user.setId(id);
+        user.setName(name);
+
+        return userRepository.save(user);
     }
 }
