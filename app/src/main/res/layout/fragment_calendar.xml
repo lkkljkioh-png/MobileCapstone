@@ -23,7 +23,7 @@
             android:text="캘린더"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:textColor="#222222"
+            android:textColor="@color/text_dark"
             android:layout_marginBottom="16dp" />
 
         <!-- 월 이동 헤더 -->
@@ -89,7 +89,7 @@
                     android:useDefaultMargins="false">
 
                     <!-- 요일 헤더 (고정, Fragment 에서 제거하지 않음) -->
-                    <TextView style="@style/CalendarDayHeader" android:text="일" android:textColor="#E53935"/>
+                    <TextView style="@style/CalendarDayHeader" android:text="일" android:textColor="@color/sunday_red"/>
                     <TextView style="@style/CalendarDayHeader" android:text="월"/>
                     <TextView style="@style/CalendarDayHeader" android:text="화"/>
                     <TextView style="@style/CalendarDayHeader" android:text="수"/>

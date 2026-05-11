@@ -19,7 +19,7 @@
         android:layout_height="32dp"
         android:gravity="center"
         android:textSize="14sp"
-        android:textColor="#333333" />
+        android:textColor="@color/text_body" />
 
     <!-- 시험일 표시 점 -->
     <View

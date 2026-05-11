@@ -16,7 +16,7 @@
         android:layout_height="26dp"
         android:gravity="center"
         android:textSize="11sp"
-        android:textColor="#333333" />
+        android:textColor="@color/text_body" />
 
     <View
         android:id="@+id/view_mini_dot"

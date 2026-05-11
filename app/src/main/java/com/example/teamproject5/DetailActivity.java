@@ -16,34 +16,25 @@ import androidx.appcompat.app.AppCompatActivity;
  * Intent로 전달받는 값:
  *   - "cert_name" (String) : 자격증 이름
  *   - "cert_id"   (int)    : 자격증 ID — 즐겨찾기 및 상세 데이터 조회용 (-1이면 미지정)
- *
- * 호출 방법:
- *   Intent intent = new Intent(this, DetailActivity.class);
- *   intent.putExtra("cert_name", certificate.getName());
- *   intent.putExtra("cert_id",   certificate.getId());
- *   startActivity(intent);  // 또는 detailLauncher.launch(intent)
- *
- * 즐겨찾기 저장 방식:
- *   CertificateRepository.toggleFavoriteById() / isFavoriteById() 를 통해
- *   SharedPreferences("favorite_prefs")에 "fav_{id}" 키로 저장
- *   → FavoriteListActivity / CertificateListActivity 등 모든 화면과 동일한 저장소 공유
- *
- * 백엔드 연동 포인트:
- *   - setInfoContent() : 응시자격·관련직무 필드를 API 응답으로 교체
- *   - setQuestionContent() : 기출문제 데이터 API 연동
- *   - setMockContent()     : 모의고사 데이터 API 연동
  */
 
 public class DetailActivity extends AppCompatActivity {
 
-    TextView title, cardTitle, backBtn, heartBtn;
-    TextView infoTab, qTab, mockTab;
-    TextView descText, qualText, jobText;
+    private TextView tvCertTitle;
+    private TextView tvCardTitle;
+    private TextView tvBtnBack;
+    private TextView tvBtnHeart;
+    private TextView tvTabInfo;
+    private TextView tvTabQuestion;
+    private TextView tvTabMock;
+    private TextView tvDescription;
+    private TextView tvQualification;
+    private TextView tvJobDescription;
 
-    String certName;
-    int certId;
+    private String certName;
+    private int certId;
 
-    CertificateRepository repository;
+    private CertificateRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,104 +46,103 @@ public class DetailActivity extends AppCompatActivity {
 
         repository = new CertificateRepository(this);
 
-        title     = findViewById(R.id.top_title);
-        cardTitle = findViewById(R.id.card_title);
-        backBtn   = findViewById(R.id.back_btn);
-        heartBtn  = findViewById(R.id.heart_btn);
+        tvCertTitle       = findViewById(R.id.tv_cert_title);
+        tvCardTitle   = findViewById(R.id.tv_card_title);
+        tvBtnBack     = findViewById(R.id.tv_btn_back);
+        tvBtnHeart    = findViewById(R.id.tv_btn_heart);
 
-        infoTab  = findViewById(R.id.info_tab);
-        qTab     = findViewById(R.id.q_tab);
-        mockTab  = findViewById(R.id.mock_tab);
+        tvTabInfo     = findViewById(R.id.tv_tab_info);
+        tvTabQuestion = findViewById(R.id.tv_tab_question);
+        tvTabMock     = findViewById(R.id.tv_tab_mock);
 
-        descText = findViewById(R.id.desc_text);
-        qualText = findViewById(R.id.qual_text);
-        jobText  = findViewById(R.id.job_text);
+        tvDescription = findViewById(R.id.tv_description);
+        tvQualification = findViewById(R.id.tv_qualification);
+        tvJobDescription  = findViewById(R.id.tv_job_description);
 
-        title.setText(certName);
-        cardTitle.setText(certName);
+        tvCertTitle.setText(certName);
+        tvCardTitle.setText(certName);
 
-        backBtn.setOnClickListener(v -> finish());
+        tvBtnBack.setOnClickListener(v -> finish());
 
-        updateHeartUI();
+        updateHeartUi();
 
-        heartBtn.setOnClickListener(v -> {
+        tvBtnHeart.setOnClickListener(v -> {
             if (certId == -1) return;
             repository.toggleFavoriteById(certId);
-            updateHeartUI();
+            updateHeartUi();
         });
 
-        setTabUI(infoTab);
+        setTabUi(tvTabInfo);
         setInfoContent();
 
-        infoTab.setOnClickListener(v -> {
-            setTabUI(infoTab);
+        tvTabInfo.setOnClickListener(v -> {
+            setTabUi(tvTabInfo);
             setInfoContent();
         });
 
-        qTab.setOnClickListener(v -> {
-            setTabUI(qTab);
+        tvTabQuestion.setOnClickListener(v -> {
+            setTabUi(tvTabQuestion);
             setQuestionContent();
         });
 
-        mockTab.setOnClickListener(v -> {
-            setTabUI(mockTab);
+        tvTabMock.setOnClickListener(v -> {
+            setTabUi(tvTabMock);
             setMockContent();
         });
     }
 
-    private void updateHeartUI() {
+    private void updateHeartUi() {
         if (certId == -1) {
-            heartBtn.setText("♡");
+            tvBtnHeart.setText("♡");
             return;
         }
-        // certId로 직접 조회, 객체 생성 없음
-        heartBtn.setText(repository.isFavoriteById(certId) ? "♥" : "♡");
+        tvBtnHeart.setText(repository.isFavoriteById(certId) ? "♥" : "♡");
     }
 
-    void setTabUI(TextView selected) {
-        infoTab.setBackgroundColor(0x00000000);
-        qTab.setBackgroundColor(0x00000000);
-        mockTab.setBackgroundColor(0x00000000);
+    private void setTabUi(TextView selected) {
+        tvTabInfo.setBackgroundColor(0x00000000);
+        tvTabQuestion.setBackgroundColor(0x00000000);
+        tvTabMock.setBackgroundColor(0x00000000);
 
-        infoTab.setTextColor(0xFF999999);
-        qTab.setTextColor(0xFF999999);
-        mockTab.setTextColor(0xFF999999);
+        tvTabInfo.setTextColor(0xFF999999);
+        tvTabQuestion.setTextColor(0xFF999999);
+        tvTabMock.setTextColor(0xFF999999);
 
         selected.setBackgroundColor(0xFF3F51B5);
         selected.setTextColor(0xFFFFFFFF);
     }
 
-    void setInfoContent() {
+    private void setInfoContent() {
         if (certId == -1) {
-            descText.setText(certName);
-            qualText.setText("");
-            jobText.setText("");
+            tvDescription.setText(certName);
+            tvQualification.setText("");
+            tvJobDescription.setText("");
             return;
         }
 
         for (Certificate cert : repository.getCertificates()) {
             if (cert.getId() == certId) {
-                descText.setText(cert.getDescription());
-                qualText.setText("백엔드 연동 후 표시");
-                jobText.setText("백엔드 연동 후 표시");
+                tvDescription.setText(cert.getDescription());
+                tvQualification.setText("백엔드 연동 후 표시");
+                tvJobDescription.setText("백엔드 연동 후 표시");
                 return;
             }
         }
 
-        descText.setText(certName);
-        qualText.setText("");
-        jobText.setText("");
+        tvDescription.setText(certName);
+        tvQualification.setText("");
+        tvJobDescription.setText("");
     }
 
-    void setQuestionContent() {
-        descText.setText("기출문제 준비중");
-        qualText.setText("");
-        jobText.setText("");
+    private void setQuestionContent() {
+        tvDescription.setText("기출문제 준비중");
+        tvQualification.setText("");
+        tvJobDescription.setText("");
     }
 
-    void setMockContent() {
-        descText.setText("모의고사 준비중");
-        qualText.setText("");
-        jobText.setText("");
+    private void setMockContent() {
+        tvDescription.setText("모의고사 준비중");
+        tvQualification.setText("");
+        tvJobDescription.setText("");
     }
 }

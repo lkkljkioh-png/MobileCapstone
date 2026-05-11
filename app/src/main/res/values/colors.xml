@@ -8,6 +8,20 @@
 
     <color name="maintext_black">#666666</color>
 
-
     <color name="white">#FFFFFF</color>
+
+    <!-- 추가: 규약에 따라 하드코딩 색상 모음 -->
+    <color name="text_dark">#222222</color>
+    <color name="text_body">#333333</color>
+    <color name="text_muted">#888888</color>
+    <color name="accent_violet">#6667AB</color>
+    <color name="background_login">#ECEAF7</color>
+    <color name="divider_light">#E0DCEF</color>
+    <color name="hint_color">#C0BCDC</color>
+    <color name="text_sub">#2C2C5B</color>
+    <color name="text_placeholder">#A49FC4</color>
+    <color name="text_link_muted">#B0ACCE</color>
+    <color name="sunday_red">#E53935</color>
+    <color name="color_success">#4CAF50</color>
+    <color name="color_error">#FF5252</color>
 </resources>

@@ -14,10 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SignupActivity extends AppCompatActivity {
 
-    EditText etEmail, etName, etPw, etPwCheck;
-    TextView tvPwCondition, tvPwMatch, tvLogin;
-    CheckBox checkBox;
-    Button btnSignup;
+    private EditText etEmail;
+    private EditText etName;
+    private EditText etPassword;
+    private EditText etPasswordCheck;
+    private TextView tvPwCondition;
+    private TextView tvPwMatch;
+    private TextView tvBtnLogin;
+    private CheckBox checkBox;
+    private Button btnSignup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,18 +31,18 @@ public class SignupActivity extends AppCompatActivity {
 
         etEmail   = findViewById(R.id.user_id);
         etName    = findViewById(R.id.user_name);
-        etPw      = findViewById(R.id.user_pw);
-        etPwCheck = findViewById(R.id.user_pw_check);
+        etPassword      = findViewById(R.id.user_pw);
+        etPasswordCheck = findViewById(R.id.user_pw_check);
 
         tvPwCondition = findViewById(R.id.tv_pw_condition);
         tvPwMatch     = findViewById(R.id.tv_pw_match_correct);
-        tvLogin       = findViewById(R.id.tv_login);
+        tvBtnLogin       = findViewById(R.id.tv_login);
 
         checkBox  = findViewById(R.id.checkbox_id);
         btnSignup = findViewById(R.id.btn_signup);
 
         // 비밀번호 조건 체크
-        etPw.addTextChangedListener(new TextWatcher() {
+        etPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
                 String pw = s.toString();
@@ -54,10 +59,10 @@ public class SignupActivity extends AppCompatActivity {
         });
 
         // 비밀번호 일치 확인
-        etPwCheck.addTextChangedListener(new TextWatcher() {
+        etPasswordCheck.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
-                if (etPw.getText().toString().equals(s.toString())) {
+                if (etPassword.getText().toString().equals(s.toString())) {
                     tvPwMatch.setText("비밀번호가 일치합니다");
                     tvPwMatch.setTextColor(0xFF4CAF50);
                 } else {
@@ -75,8 +80,8 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email   = etEmail.getText().toString();
                 String name    = etName.getText().toString();
-                String pw      = etPw.getText().toString();
-                String pwCheck = etPwCheck.getText().toString();
+                String pw      = etPassword.getText().toString();
+                String pwCheck = etPasswordCheck.getText().toString();
 
                 if (email.isEmpty() || name.isEmpty() || pw.isEmpty() || pwCheck.isEmpty()) {
                     Toast.makeText(SignupActivity.this, "모든 항목을 입력하세요", Toast.LENGTH_SHORT).show();
@@ -92,7 +97,6 @@ public class SignupActivity extends AppCompatActivity {
                 }
 
                 // 회원가입 완료 → 이름을 SharedPreferences에 임시 저장
-                // 로그인 시 이 값을 우선 사용, 없으면 이메일 앞부분을 닉네임으로 사용
                 // 백엔드 연동 시 서버 응답값으로 교체
                 getSharedPreferences("user_prefs", MODE_PRIVATE)
                         .edit()
@@ -105,7 +109,7 @@ public class SignupActivity extends AppCompatActivity {
         });
 
         // 로그인으로 돌아가기
-        tvLogin.setOnClickListener(new View.OnClickListener() {
+        tvBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

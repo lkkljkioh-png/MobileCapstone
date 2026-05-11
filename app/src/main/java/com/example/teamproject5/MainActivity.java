@@ -16,16 +16,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
-    private ImageView btnMenu;
-    private TextView btnAllCert;
-    private TextView btnFavorite;
-    private TextView btnCalendar;
+    private ImageView imgBtnMenu;
+    private TextView tvBtnAllCert;
+    private TextView tvBtnFavorite;
+    private TextView tvBtnCalendar;
 
-    private LinearLayout sideMenu;
-    private ImageView btnCloseMenu;
-    private LinearLayout menuHome;
-    private LinearLayout menuList;
-    private LinearLayout menuMy;
+    private LinearLayout layoutSideMenu;
+    private ImageView imgBtnCloseMenu;
+    private LinearLayout layoutMenuHome;
+    private LinearLayout layoutMenuList;
+    private LinearLayout layoutMenuMy;
 
     private LinearLayout btnCategoryTech;
     private LinearLayout btnCategoryIndustry;
@@ -40,24 +40,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // 뷰 연결
-        drawerLayout = findViewById(R.id.drawerLayout);
-        btnMenu      = findViewById(R.id.btnMenu);
-        btnAllCert   = findViewById(R.id.btn_all_cert);
-        btnFavorite  = findViewById(R.id.btn_favorite);
-        btnCalendar  = findViewById(R.id.btn_calendar);
+        drawerLayout   = findViewById(R.id.drawerLayout);
+        imgBtnMenu     = findViewById(R.id.img_btn_menu);
+        tvBtnAllCert   = findViewById(R.id.tv_btn_all_cert);
+        tvBtnFavorite  = findViewById(R.id.tv_btn_favorite);
+        tvBtnCalendar  = findViewById(R.id.tv_btn_calendar);
 
-        sideMenu     = findViewById(R.id.sideMenu);
-        btnCloseMenu = findViewById(R.id.btnCloseMenu);
-        menuHome     = findViewById(R.id.menuHome);
-        menuList     = findViewById(R.id.menuList);
-        menuMy       = findViewById(R.id.menuMy);
+        layoutSideMenu    = findViewById(R.id.layout_side_menu);
+        imgBtnCloseMenu   = findViewById(R.id.img_btn_close_menu);
+        layoutMenuHome    = findViewById(R.id.layout_menu_home);
+        layoutMenuList    = findViewById(R.id.layout_menu_list);
+        layoutMenuMy      = findViewById(R.id.layout_menu_my);
 
-        btnCategoryTech     = findViewById(R.id.btnCategoryTech);
-        btnCategoryIndustry = findViewById(R.id.btnCategoryIndustry);
-        btnCategoryBusiness = findViewById(R.id.btnCategoryBusiness);
-        btnCategoryPrimary  = findViewById(R.id.btnCategoryPrimary);
-        btnCategoryCreative = findViewById(R.id.btnCategoryCreative);
-        btnCategoryService  = findViewById(R.id.btnCategoryService);
+        btnCategoryTech     = findViewById(R.id.btn_category_tech);
+        btnCategoryIndustry = findViewById(R.id.btn_category_industry);
+        btnCategoryBusiness = findViewById(R.id.btn_category_business);
+        btnCategoryPrimary  = findViewById(R.id.btn_category_primary);
+        btnCategoryCreative = findViewById(R.id.btn_category_creative);
+        btnCategoryService  = findViewById(R.id.btn_category_service);
 
         setSideMenuWidthHalfScreen();
         setupListeners();
@@ -66,50 +66,47 @@ public class MainActivity extends AppCompatActivity {
     private void setupListeners() {
 
         // 햄버거 버튼
-        if (btnMenu != null && drawerLayout != null) {
-            btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.END));
+        if (imgBtnMenu != null && drawerLayout != null) {
+            imgBtnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.END));
         }
 
         // 메뉴 닫기
-        if (btnCloseMenu != null && drawerLayout != null) {
-            btnCloseMenu.setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.END));
+        if (imgBtnCloseMenu != null && drawerLayout != null) {
+            imgBtnCloseMenu.setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.END));
         }
 
         // 전체 자격증
-        if (btnAllCert != null) {
-            btnAllCert.setOnClickListener(v -> {
-                startActivity(new Intent(MainActivity.this, CertificateListActivity.class));
-            });
+        if (tvBtnAllCert != null) {
+            tvBtnAllCert.setOnClickListener(v ->
+                    startActivity(new Intent(MainActivity.this, CertificateListActivity.class)));
         }
 
         // 즐겨찾기
-        if (btnFavorite != null) {
-            btnFavorite.setOnClickListener(v -> {
-                startActivity(new Intent(MainActivity.this, FavoriteListActivity.class));
-            });
+        if (tvBtnFavorite != null) {
+            tvBtnFavorite.setOnClickListener(v ->
+                    startActivity(new Intent(MainActivity.this, FavoriteListActivity.class)));
         }
 
         // 캘린더 이동
-        if (btnCalendar != null) {
-            btnCalendar.setOnClickListener(v -> {
-                startActivity(new Intent(MainActivity.this, CalendarActivity.class));
-            });
+        if (tvBtnCalendar != null) {
+            tvBtnCalendar.setOnClickListener(v ->
+                    startActivity(new Intent(MainActivity.this, CalendarActivity.class)));
         }
 
         // 사이드 메뉴
-        if (menuHome != null && drawerLayout != null) {
-            menuHome.setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.END));
+        if (layoutMenuHome != null && drawerLayout != null) {
+            layoutMenuHome.setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.END));
         }
 
-        if (menuList != null && drawerLayout != null) {
-            menuList.setOnClickListener(v -> {
+        if (layoutMenuList != null && drawerLayout != null) {
+            layoutMenuList.setOnClickListener(v -> {
                 startActivity(new Intent(MainActivity.this, CertificateListActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.END);
             });
         }
 
-        if (menuMy != null && drawerLayout != null) {
-            menuMy.setOnClickListener(v -> {
+        if (layoutMenuMy != null && drawerLayout != null) {
+            layoutMenuMy.setOnClickListener(v -> {
                 startActivity(new Intent(MainActivity.this, MyActivity.class));
                 drawerLayout.closeDrawer(GravityCompat.END);
             });
@@ -148,14 +145,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setSideMenuWidthHalfScreen() {
-        if (sideMenu == null) return;
+        if (layoutSideMenu == null) return;
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int screenWidth = metrics.widthPixels;
         int menuWidth = (int) (screenWidth * 0.5f);
 
-        ViewGroup.LayoutParams params = sideMenu.getLayoutParams();
+        ViewGroup.LayoutParams params = layoutSideMenu.getLayoutParams();
         params.width = menuWidth;
-        sideMenu.setLayoutParams(params);
+        layoutSideMenu.setLayoutParams(params);
     }
 }

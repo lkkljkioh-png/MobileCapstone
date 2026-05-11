@@ -99,19 +99,19 @@ public class CertificateAdapter extends RecyclerView.Adapter<CertificateAdapter.
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName;
-        TextView tvDescription;
-        TextView tvCategory;
-        TextView btnFavorite;
-        Button btnGo;
+        private TextView tvName;
+        private TextView tvDescription;
+        private TextView tvCategory;
+        private TextView btnFavorite;
+        private Button btnGo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.tvName);
-            tvDescription = itemView.findViewById(R.id.tvDescription);
-            tvCategory = itemView.findViewById(R.id.tvCategory);
-            btnFavorite = itemView.findViewById(R.id.btnFavorite);
-            btnGo = itemView.findViewById(R.id.btnGo);
+            tvName = itemView.findViewById(R.id.tv_name);
+            tvDescription = itemView.findViewById(R.id.tv_description);
+            tvCategory = itemView.findViewById(R.id.tv_category_label);
+            btnFavorite = itemView.findViewById(R.id.btn_favorite);
+            btnGo = itemView.findViewById(R.id.btn_go);
         }
     }
 }

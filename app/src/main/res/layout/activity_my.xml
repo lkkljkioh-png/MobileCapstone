@@ -2,183 +2,215 @@
 <!--
     MY 탭 레이아웃
 -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/background_white">
 
-    <LinearLayout
+    <!-- 상단 헤더: 뒤로가기 + 타이틀 중앙정렬 -->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="32dp">
+        android:layout_height="@dimen/header_height"
+        android:paddingStart="@dimen/header_padding_horizontal"
+        android:paddingEnd="@dimen/header_padding_horizontal"
+        android:paddingTop="@dimen/header_padding_vertical"
+        android:paddingBottom="@dimen/header_padding_vertical">
 
-        <!-- 상단 타이틀 -->
+        <TextView
+            android:id="@+id/tv_btn_back"
+            android:layout_width="@dimen/back_btn_size"
+            android:layout_height="@dimen/back_btn_size"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="〈"
+            android:textSize="@dimen/back_btn_text_size"
+            android:textColor="@color/primary_blue"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="MY"
-            android:textSize="22sp"
+            android:textSize="@dimen/header_title_text_size"
             android:textStyle="bold"
-            android:textColor="#222222"
-            android:layout_marginBottom="20dp" />
+            android:textColor="@color/text_dark" />
 
-        <!-- 프로필 영역 카드 -->
-        <com.google.android.material.card.MaterialCardView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/light_blue"
-            app:strokeColor="@color/stroke_gray"
-            app:strokeWidth="1dp">
+            android:orientation="vertical"
+            android:paddingStart="@dimen/screen_padding"
+            android:paddingEnd="@dimen/screen_padding"
+            android:paddingTop="@dimen/screen_padding"
+            android:paddingBottom="@dimen/page_padding_bottom">
 
+            <!-- 프로필 영역 카드 -->
+            <com.google.android.material.card.MaterialCardView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/card_margin_bottom"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/light_blue"
+                app:strokeColor="@color/stroke_gray"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/card_padding">
+
+                    <!-- 원형 프로필 도형 -->
+                    <View
+                        android:layout_width="@dimen/profile_circle_size"
+                        android:layout_height="@dimen/profile_circle_size"
+                        android:background="@drawable/bg_profile_circle"
+                        android:layout_marginEnd="@dimen/screen_padding" />
+
+                    <!-- 이름 -->
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="사용자 님"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_dark" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 즐겨찾기 섹션 헤더 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:padding="20dp">
+                android:layout_marginBottom="@dimen/section_header_margin_bottom">
 
-                <!-- 원형 프로필 도형 -->
-                <View
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:background="@drawable/bg_profile_circle"
-                    android:layout_marginEnd="16dp" />
-
-                <!-- 이름 -->
                 <TextView
-                    android:id="@+id/tv_user_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="사용자 님"
-                    android:textSize="18sp"
+                    android:layout_weight="1"
+                    android:text="즐겨찾기한 자격증"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#222222" />
+                    android:textColor="@color/text_dark" />
+
+                <!-- 즐겨찾기 상세 목록으로 이동하는 화살표 버튼 -->
+                <ImageButton
+                    android:id="@+id/img_btn_go_favorite"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@android:drawable/ic_media_next"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="즐겨찾기 전체 보기" />
 
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
 
-        <!-- 즐겨찾기 섹션 헤더 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="10dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="즐겨찾기한 자격증"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#222222" />
-
-            <!-- 즐겨찾기 상세 목록으로 이동하는 화살표 버튼 -->
-            <ImageButton
-                android:id="@+id/btn_go_favorite"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@android:drawable/ic_media_next"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="즐겨찾기 전체 보기" />
-
-        </LinearLayout>
-
-        <!-- 즐겨찾기 자격증 목록 컨테이너 -->
-        <LinearLayout
-            android:id="@+id/layout_favorite_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="24dp" />
-
-        <!-- 캘린더 섹션 헤더 -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="10dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="캘린더"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#222222" />
-
-            <!-- 캘린더 탭으로 이동하는 화살표 버튼 -->
-            <ImageButton
-                android:id="@+id/btn_go_calendar"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@android:drawable/ic_media_next"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="캘린더 보기" />
-
-        </LinearLayout>
-
-        <!-- 미니 캘린더 카드 -->
-        <com.google.android.material.card.MaterialCardView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/light_blue"
-            app:strokeColor="@color/stroke_gray"
-            app:strokeWidth="1dp">
-
+            <!-- 즐겨찾기 자격증 목록 컨테이너 -->
             <LinearLayout
+                android:id="@+id/layout_favorite_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="12dp">
+                android:layout_marginBottom="24dp" />
 
-                <!-- 미니 캘린더 월 표시 -->
+            <!-- 캘린더 섹션 헤더 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/section_header_margin_bottom">
+
                 <TextView
-                    android:id="@+id/tv_mini_year_month"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="14sp"
+                    android:layout_weight="1"
+                    android:text="캘린더"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="@color/primary_blue"
-                    android:layout_marginBottom="6dp" />
+                    android:textColor="@color/text_dark" />
 
-                <!-- 미니 캘린더 그리드 -->
-                <GridLayout
-                    android:id="@+id/grid_mini_calendar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:columnCount="7"
-                    android:useDefaultMargins="false">
-
-                    <!-- 요일 헤더-->
-                    <TextView style="@style/MiniCalendarDayHeader" android:text="일" android:textColor="#E53935"/>
-                    <TextView style="@style/MiniCalendarDayHeader" android:text="월"/>
-                    <TextView style="@style/MiniCalendarDayHeader" android:text="화"/>
-                    <TextView style="@style/MiniCalendarDayHeader" android:text="수"/>
-                    <TextView style="@style/MiniCalendarDayHeader" android:text="목"/>
-                    <TextView style="@style/MiniCalendarDayHeader" android:text="금"/>
-                    <TextView style="@style/MiniCalendarDayHeader" android:text="토" android:textColor="@color/primary_blue"/>
-
-                    <!-- 날짜 셀은 MyActivity에서 동적으로 추가됩니다 -->
-                </GridLayout>
+                <!-- 캘린더 탭으로 이동하는 화살표 버튼 -->
+                <ImageButton
+                    android:id="@+id/img_btn_go_calendar"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@android:drawable/ic_media_next"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="캘린더 보기" />
 
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
 
-    </LinearLayout>
-</ScrollView>
+            <!-- 미니 캘린더 카드 -->
+            <com.google.android.material.card.MaterialCardView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/light_blue"
+                app:strokeColor="@color/stroke_gray"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <!-- 미니 캘린더 월 표시 -->
+                    <TextView
+                        android:id="@+id/tv_mini_year_month"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary_blue"
+                        android:layout_marginBottom="6dp" />
+
+                    <!-- 미니 캘린더 그리드 -->
+                    <GridLayout
+                        android:id="@+id/grid_mini_calendar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="7"
+                        android:useDefaultMargins="false">
+
+                        <!-- 요일 헤더-->
+                        <TextView style="@style/MiniCalendarDayHeader" android:text="일" android:textColor="@color/sunday_red"/>
+                        <TextView style="@style/MiniCalendarDayHeader" android:text="월"/>
+                        <TextView style="@style/MiniCalendarDayHeader" android:text="화"/>
+                        <TextView style="@style/MiniCalendarDayHeader" android:text="수"/>
+                        <TextView style="@style/MiniCalendarDayHeader" android:text="목"/>
+                        <TextView style="@style/MiniCalendarDayHeader" android:text="금"/>
+                        <TextView style="@style/MiniCalendarDayHeader" android:text="토" android:textColor="@color/primary_blue"/>
+
+                        <!-- 날짜 셀은 MyActivity에서 동적으로 추가됩니다 -->
+                    </GridLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

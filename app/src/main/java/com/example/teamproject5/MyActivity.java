@@ -23,27 +23,22 @@ import java.util.Map;
  *
  * 구성:
  *  1. 프로필 영역 - 원형 도형 + "user_name 님"
- *  2. 즐겨찾기 자격증 목록 (최대 3개) - 추후 구현 예정
+ *  2. 즐겨찾기 자격증 목록 (최대 3개)
  *  3. 미니 캘린더 - 즐겨찾기 자격증 시험일에 원형 표시
- *                  → 화살표 버튼 클릭 시 CalendarActivity로 이동
- *
- * 백엔드 연동 포인트:
- *  - renderUserName(): 현재는 SharedPreferences에서 로그인 이름 표시
- *                      백엔드 연동 시 사용자 프로필 API 응답으로 교체
- *  - renderFavoriteList(): 서버 즐겨찾기 목록 API로 교체
  */
 public class MyActivity extends AppCompatActivity {
 
     // ── 상수 ───────────────────────────────────────────────────────────────
-    private static final int MAX_FAVORITE_DISPLAY = 3; // 즐겨찾기 최대 표시 개수
+    private static final int MAX_FAVORITE_DISPLAY = 3;
 
     // ── Views ──────────────────────────────────────────────────────────────
-    private TextView tvUserName; // 상단 프로필 영역 — "OO 님" 형태로 로그인한 사용자 이름 표시
-    private LinearLayout layoutFavoriteList; // 즐겨찾기 자격증 카드 목록을 동적으로 추가하는 컨테이너 (최대 3개)
-    private ImageButton btnGoFavorite; // 즐겨찾기 전체 목록으로 이동하는 화살표 버튼 → FavoriteListActivity
-    private ImageButton btnGoCalendar; // 캘린더 전체 화면으로 이동하는 화살표 버튼 → CalendarActivity
-    private TextView tvMiniYearMonth; // 미니 캘린더 상단 — 현재 년/월 표시 (예: "2026년 4월")
-    private GridLayout gridMiniCalendar; // 미니 캘린더 본체 — 이번 달 날짜 셀을 동적으로 그리는 7열 그리드
+    private TextView tvBtnBack;
+    private TextView tvUserName;
+    private LinearLayout layoutFavoriteList;
+    private ImageButton imgBtnGoFavorite;
+    private ImageButton imgBtnGoCalendar;
+    private TextView tvMiniYearMonth;
+    private GridLayout gridMiniCalendar;
 
     // ── Data ───────────────────────────────────────────────────────────────
     private CertificateRepository repository;
@@ -63,10 +58,6 @@ public class MyActivity extends AppCompatActivity {
         setupListeners();
     }
 
-    /**
-     * onResume: 다른 화면에서 즐겨찾기 변경 후 돌아올 때 자동 갱신
-     * (예: 자격증 목록에서 즐겨찾기 변경 → 뒤로가기 → MY 화면 최신 상태 반영)
-     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -77,10 +68,11 @@ public class MyActivity extends AppCompatActivity {
     // ── 초기화 ─────────────────────────────────────────────────────────────
 
     private void initViews() {
+        tvBtnBack         = findViewById(R.id.tv_btn_back);
         tvUserName        = findViewById(R.id.tv_user_name);
         layoutFavoriteList = findViewById(R.id.layout_favorite_list);
-        btnGoFavorite     = findViewById(R.id.btn_go_favorite);
-        btnGoCalendar     = findViewById(R.id.btn_go_calendar);
+        imgBtnGoFavorite  = findViewById(R.id.img_btn_go_favorite);
+        imgBtnGoCalendar  = findViewById(R.id.img_btn_go_calendar);
         tvMiniYearMonth   = findViewById(R.id.tv_mini_year_month);
         gridMiniCalendar  = findViewById(R.id.grid_mini_calendar);
     }
@@ -90,10 +82,6 @@ public class MyActivity extends AppCompatActivity {
         buildFavoriteDateMap();
     }
 
-    /**
-     * 즐겨찾기 + examDate 있는 자격증만 날짜별 Map으로 구성합니다.
-     * 백엔드 연동 시 이 메서드를 수정하세요.
-     */
     private void buildFavoriteDateMap() {
         favoriteDateMap = new HashMap<>();
 
@@ -111,14 +99,19 @@ public class MyActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
+        // 뒤로가기
+        if (tvBtnBack != null) {
+            tvBtnBack.setOnClickListener(v -> finish());
+        }
+
         // 즐겨찾기 상세 목록으로 이동
-        btnGoFavorite.setOnClickListener(v -> {
+        imgBtnGoFavorite.setOnClickListener(v -> {
             Intent intent = new Intent(MyActivity.this, FavoriteListActivity.class);
             startActivity(intent);
         });
 
         // 캘린더 탭으로 이동
-        btnGoCalendar.setOnClickListener(v -> {
+        imgBtnGoCalendar.setOnClickListener(v -> {
             Intent intent = new Intent(MyActivity.this, CalendarActivity.class);
             startActivity(intent);
         });
@@ -132,23 +125,12 @@ public class MyActivity extends AppCompatActivity {
         renderMiniCalendar();
     }
 
-    /**
-     * 사용자 이름 표시
-     * 현재는 LoginActivity에서 저장한 SharedPreferences 값을 읽어 표시
-     * 백엔드 연동 시: 사용자 프로필 API 응답값으로 교체하세요.
-     */
     private void renderUserName() {
-        // 현재는 SharedPreferences에 저장된 로그인 이름 사용
-        // 백엔드 연동 시 사용자 프로필 API 응답값으로 교체
         String userName = getSharedPreferences("user_prefs", MODE_PRIVATE)
                 .getString("user_name", "사용자");
         tvUserName.setText(userName + " 님");
     }
 
-    /**
-     * 즐겨찾기 자격증 목록 표시 (최대 3개)
-     * 추후 보완 예정
-     */
     private void renderFavoriteList() {
         List<Certificate> allList = repository.getCertificates();
         List<Certificate> favorites = new ArrayList<>();
@@ -163,7 +145,6 @@ public class MyActivity extends AppCompatActivity {
         layoutFavoriteList.removeAllViews();
 
         if (favorites.isEmpty()) {
-            // 즐겨찾기가 없을 때 안내 텍스트
             TextView tvEmpty = new TextView(this);
             tvEmpty.setText("즐겨찾기한 자격증이 없어요.");
             tvEmpty.setTextSize(14f);
@@ -182,7 +163,6 @@ public class MyActivity extends AppCompatActivity {
             tvName.setText(cert.getName());
             tvCategory.setText(CategoryUtils.toLabel(cert.getCategory()));
 
-            // 즐겨찾기 카드 클릭 → DetailActivity로 이동
             itemView.setOnClickListener(v -> {
                 android.content.Intent intent = new android.content.Intent(MyActivity.this, DetailActivity.class);
                 intent.putExtra("cert_name", cert.getName());
@@ -196,41 +176,30 @@ public class MyActivity extends AppCompatActivity {
 
     // ── 미니 캘린더 렌더링 ─────────────────────────────────────────────────
 
-    /**
-     * 이번 달 기준 미니 캘린더를 그림
-     * 즐겨찾기 자격증 시험일에만 원형 표시(dot)를 그림
-     * 날짜 클릭 등 상세 기능은 CalendarActivity에서 제공
-     */
     private void renderMiniCalendar() {
         Calendar cal = Calendar.getInstance();
         int year  = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH) + 1; // 1-based
+        int month = cal.get(Calendar.MONTH) + 1;
 
         tvMiniYearMonth.setText(year + "년 " + month + "월");
 
-        // 요일 헤더 7개 이후 날짜 셀 제거
         int headerCount = 7;
         int total = gridMiniCalendar.getChildCount();
         if (total > headerCount) {
             gridMiniCalendar.removeViews(headerCount, total - headerCount);
         }
 
-        // 1일의 요일 오프셋
         Calendar firstDay = (Calendar) cal.clone();
         firstDay.set(Calendar.DAY_OF_MONTH, 1);
-        int offset = firstDay.get(Calendar.DAY_OF_WEEK) - 1; // 0(일)~6(토)
+        int offset = firstDay.get(Calendar.DAY_OF_WEEK) - 1;
 
         int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-        // 오늘 날짜
         int todayDay = cal.get(Calendar.DAY_OF_MONTH);
 
-        // 빈 셀
         for (int i = 0; i < offset; i++) {
             addMiniEmptyCell();
         }
 
-        // 날짜 셀
         for (int day = 1; day <= maxDay; day++) {
             String dateKey = String.format("%04d-%02d-%02d", year, month, day);
             boolean hasCert = favoriteDateMap.containsKey(dateKey);
@@ -255,7 +224,6 @@ public class MyActivity extends AppCompatActivity {
         tvDay.setText(String.valueOf(day));
         dotView.setVisibility(hasCert ? View.VISIBLE : View.GONE);
 
-        // 오늘 강조
         if (isToday) {
             tvDay.setBackgroundResource(R.drawable.bg_calendar_today);
             tvDay.setTextColor(ContextCompat.getColor(this, R.color.white));

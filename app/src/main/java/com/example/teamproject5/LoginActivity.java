@@ -12,9 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText etId, etPw;
-    Button btnLogin;
-    TextView tvSignup;
+    private EditText etId;
+    private EditText etPassword;
+    private Button btnLogin;
+    private TextView tvBtnSignup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,16 +23,16 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         etId     = findViewById(R.id.et_id);
-        etPw     = findViewById(R.id.et_pw);
+        etPassword     = findViewById(R.id.et_pw);
         btnLogin = findViewById(R.id.btn_login);
-        tvSignup = findViewById(R.id.tv_signup);
+        tvBtnSignup = findViewById(R.id.tv_signup);
 
         // 로그인 버튼 클릭
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String id = etId.getText().toString();
-                String pw = etPw.getText().toString();
+                String pw = etPassword.getText().toString();
 
                 if (id.isEmpty() || pw.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
@@ -62,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // 회원가입 이동
-        tvSignup.setOnClickListener(new View.OnClickListener() {
+        tvBtnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
