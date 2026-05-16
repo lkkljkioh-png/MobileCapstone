@@ -20,5 +20,16 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        new Thread(() -> {
+            try {
+                com.tp.licenseList.LicenseDatabase db = com.tp.licenseList.LicenseDatabase.getInstance(this);
+                java.util.List<com.tp.licenseList.License> list = db.licenseDao().getAll();
+                //프론트엔드 화면 출력 코드
+            } catch (Exception e) {
+                runOnUiThread(() ->
+                        android.widget.Toast.makeText(MainActivity.this, "데이터를 불러오지 못했습니다.", android.widget.Toast.LENGTH_SHORT).show()
+                );
+            }
+        }).start();
     }
 }
