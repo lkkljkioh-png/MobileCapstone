@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">자격증 다모아</string>
+
+    <string name="app_title">자격증 다모아</string>
+    <string name="cert_name_ex">자격증명 예시</string>
+    <string name="cert_recent_title">최근 본 자격증</string>
+    <string name="category_name_ex">카테고리명 예시</string>
+    <string name="search_hint">자격증 검색</string>
+    <string name="certificate_list_title">전체 자격증 목록</string>
+    <string name="category_title">카테고리</string>
+    <string name="favorite_title">즐겨찾기</string>
+    <string name="home_title">홈</string>
+    <string name="cert_description_ex">자격증 설명</string>
+    <string name="view_detail">보러가기</string>
+    <string name="error_recycler_not_found">RecyclerView를 찾을 수 없습니다.</string>
+    <string name="favorite_added">즐겨찾기 추가</string>
+    <string name="favorite_removed">즐겨찾기 해제</string>
+    <string name="open_menu">메뉴 열기</string>
+
+
+    <string name="category_tech">IT·기술</string>
+    <!-- IT 기술 환경 분야의 자격증이 들어갑니다-->
+    <string name="category_industry">건설·산업·안전</string>
+    <!-- 건설 소방 분야의 자격증이 들어갑니다-->
+    <string name="category_business">경영·사무·금융</string>
+    <!-- 사무 금융 분야의 자격증이 들어갑니다-->
+    <string name="category_primary">농림·해양·식품</string>
+    <!-- 농림축산 해양 식품 분야의 자격증이 들어갑니다-->
+    <string name="category_creative">예술·미디어</string>
+    <!-- 디자인 문화예술 미디어언론 분야의 자격증이 들어갑니다-->
+    <string name="category_service">생활·서비스·교육</string>
+    <!-- 보건복지 보건의료 미용 어학 항공  분야의 자격증이 들어갑니다-->
+
+    <string name="nav_home">홈</string>
+    <string name="nav_list">목록</string>
+    <string name="nav_calendar">캘린더</string>
+    <string name="calendar_title">캘린더</string>
+    <string name="prev_month">이전 달</string>
+    <string name="nav_my">MY</string>
+    <string name="my_title">MY</string>
+    <string name="my_profile_default_name">user_name</string>
+    <string name="my_favorite_section">즐겨찾기한 자격증</string>
+    <string name="my_favorite_empty">즐겨찾기한 자격증이 없어요.</string>
+    <string name="my_go_calendar">캘린더 보기</string>
+</resources>

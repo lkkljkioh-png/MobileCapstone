@@ -1,0 +1,9 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--홈 화면 상단 "최근 본 자격증", "즐겨찾기" 섹션 타이틀 칩 배경-->
+    <solid android:color="@color/light_blue" />
+    <corners android:radius="20dp"/>
+    <stroke
+        android:width="1dp"
+        android:color="@color/stroke_gray"/>
+</shape>
