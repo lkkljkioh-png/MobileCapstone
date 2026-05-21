@@ -44,6 +44,7 @@ public class MyActivity extends AppCompatActivity {
     private LinearLayout layoutFavoriteList; // 즐겨찾기 자격증 카드 목록을 동적으로 추가하는 컨테이너 (최대 3개)
     private ImageButton btnGoFavorite; // 즐겨찾기 전체 목록으로 이동하는 화살표 버튼 → FavoriteListActivity
     private ImageButton btnGoCalendar; // 캘린더 전체 화면으로 이동하는 화살표 버튼 → CalendarActivity
+    private android.widget.Button btnLogout; // 로그아웃 버튼
     private TextView tvMiniYearMonth; // 미니 캘린더 상단 — 현재 년/월 표시 (예: "2026년 4월")
     private GridLayout gridMiniCalendar; // 미니 캘린더 본체 — 이번 달 날짜 셀을 동적으로 그리는 7열 그리드
 
@@ -85,6 +86,7 @@ public class MyActivity extends AppCompatActivity {
         btnGoCalendar     = findViewById(R.id.btn_go_calendar);
         tvMiniYearMonth   = findViewById(R.id.tv_mini_year_month);
         gridMiniCalendar  = findViewById(R.id.grid_mini_calendar);
+        btnLogout         = findViewById(R.id.btn_logout);
     }
 
     private void initData() {
@@ -123,6 +125,28 @@ public class MyActivity extends AppCompatActivity {
         btnGoCalendar.setOnClickListener(v -> {
             Intent intent = new Intent(MyActivity.this, CalendarActivity.class);
             startActivity(intent);
+        });
+
+        // 로그아웃 버튼
+        btnLogout.setOnClickListener(v -> {
+            new android.app.AlertDialog.Builder(MyActivity.this)
+                    .setMessage("정말 로그아웃하시겠습니까?")
+                    .setPositiveButton("YES", (dialog, which) -> {
+                        // 로그인 상태 초기화
+                        getSharedPreferences("user_prefs", MODE_PRIVATE)
+                                .edit()
+                                .putBoolean("is_logged_in", false)
+                                .putString("user_name", "")
+                                .putString("signup_name", "")
+                                .apply();
+
+                        // 로그인 화면으로 이동 (백스택 전부 제거)
+                        Intent intent = new Intent(MyActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    })
+                    .setNegativeButton("NO", null)
+                    .show();
         });
     }
 

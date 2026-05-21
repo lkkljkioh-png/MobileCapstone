@@ -180,5 +180,19 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- 로그아웃 버튼 -->
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="8dp"
+            android:text="로그아웃"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/deco_violet"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp" />
+
     </LinearLayout>
 </ScrollView>
