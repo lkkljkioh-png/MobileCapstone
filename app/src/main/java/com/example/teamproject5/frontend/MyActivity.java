@@ -1,4 +1,4 @@
-package com.example.teamproject5;
+package com.example.teamproject5.frontend;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import com.example.teamproject5.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -1,4 +1,4 @@
-package com.example.teamproject5;
+package com.example.teamproject5.frontend;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.teamproject5.R;
 
 /**
  * 스플래시 Activity

@@ -1,4 +1,4 @@
-package com.example.teamproject5;
+package com.example.teamproject5.frontend;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.example.teamproject5.R;
 
 /**
  * 홈 화면 Activity

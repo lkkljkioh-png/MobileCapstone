@@ -1,4 +1,4 @@
-package com.example.teamproject5;
+package com.example.teamproject5.frontend;
 
 import android.content.Context;
 import android.content.SharedPreferences;

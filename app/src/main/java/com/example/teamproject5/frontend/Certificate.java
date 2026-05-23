@@ -1,4 +1,4 @@
-package com.example.teamproject5;
+package com.example.teamproject5.frontend;
 
 /**
  * 자격증 데이터 모델

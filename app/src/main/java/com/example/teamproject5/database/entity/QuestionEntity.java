@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-import com.example.teamproject5.Certificate;
+import com.example.teamproject5.frontend.Certificate;
 
 @Entity(
         foreignKeys = @ForeignKey(

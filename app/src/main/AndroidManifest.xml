@@ -14,7 +14,7 @@
 
         <!-- 스플래시 → 앱 진입점 -->
         <activity
-            android:name=".LoadingActivity"
+            android:name=".frontend.LoadingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,26 +24,26 @@
 
         <!-- 로그인 -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".frontend.LoginActivity"
             android:exported="false" />
 
         <!-- 회원가입 -->
         <activity
-            android:name=".SignupActivity"
+            android:name=".frontend.SignupActivity"
             android:exported="false" />
 
         <!-- 홈 -->
         <activity
-            android:name=".MainActivity"
+            android:name=".frontend.MainActivity"
             android:exported="false" />
 
         <!-- 자격증 / 캘린더 / MY 화면 -->
-        <activity android:name=".CertificateListActivity" />
-        <activity android:name=".CalendarActivity" />
-        <activity android:name=".MyActivity" />
-        <activity android:name=".FavoriteListActivity" />
-        <activity android:name=".CategoryListActivity" />
-        <activity android:name=".DetailActivity" />
+        <activity android:name=".frontend.CertificateListActivity" />
+        <activity android:name=".frontend.CalendarActivity" />
+        <activity android:name=".frontend.MyActivity" />
+        <activity android:name=".frontend.FavoriteListActivity" />
+        <activity android:name=".frontend.CategoryListActivity" />
+        <activity android:name=".frontend.DetailActivity" />
 
     </application>
 

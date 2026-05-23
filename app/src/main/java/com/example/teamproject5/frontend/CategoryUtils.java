@@ -1,4 +1,4 @@
-package com.example.teamproject5;
+package com.example.teamproject5.frontend;
 
 /**
  * 카테고리 ID → 한글 라벨 변환 유틸

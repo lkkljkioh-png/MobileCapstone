@@ -1,8 +1,10 @@
-package com.example.teamproject5;
+package com.example.teamproject5.frontend;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.teamproject5.R;
 
 /**
  * 캘린더 탭 Activity

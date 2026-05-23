@@ -1,9 +1,11 @@
-package com.example.teamproject5;
+package com.example.teamproject5.frontend;
 
 import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.teamproject5.R;
 
 /**
  * 자격증 상세 정보 Activity
