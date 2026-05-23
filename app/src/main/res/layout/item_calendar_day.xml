@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    달력 날짜 셀 레이아웃
+    - tv_day: 날짜 숫자
+    - view_dot: 즐겨찾기 자격증 시험일 표시 점
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="48dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackgroundBorderless">
+
+    <TextView
+        android:id="@+id/tv_day"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="#333333" />
+
+    <!-- 시험일 표시 점 -->
+    <View
+        android:id="@+id/view_dot"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:background="@drawable/bg_calendar_dot"
+        android:visibility="gone" />
+
+</LinearLayout>

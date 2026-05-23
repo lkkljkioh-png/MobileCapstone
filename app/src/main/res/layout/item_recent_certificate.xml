@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_card"
+    android:padding="18dp"
+    android:layout_marginBottom="10dp"
+    android:fontFamily="@font/chosun_sg">
+
+    <TextView
+        android:id="@+id/txtCertificateName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#2C2C5B"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/chosun_sg"/>
+
+    <TextView
+        android:id="@+id/txtViewTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#A49FC4"
+        android:textSize="12sp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/chosun_sg"/>
+
+</LinearLayout>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- MY 화면 -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ECEAF7">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="32dp">
+
+        <!-- 상단 타이틀 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MY"
+            android:textColor="#2C2C5B"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/chosun_sg"
+            android:layout_marginBottom="20dp" />
+
+        <!-- 프로필 카드 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:strokeColor="#DDD9F3"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="22dp">
+
+                <!-- 프로필 원 -->
+                <View
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:background="@drawable/bg_profile_circle"
+                    android:layout_marginEnd="16dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="사용자 님"
+                        android:textColor="#2C2C5B"
+                        android:textSize="19sp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/chosun_sg" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 즐겨찾기 헤더 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="즐겨찾기한 자격증"
+                android:textColor="#2C2C5B"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/chosun_sg" />
+
+            <ImageButton
+                android:id="@+id/btn_go_favorite"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_chip"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_media_next"
+                android:contentDescription="즐겨찾기 보기" />
+
+        </LinearLayout>
+
+        <!-- 즐겨찾기 카드 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:strokeColor="#DDD9F3"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:id="@+id/layout_favorite_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 캘린더 헤더 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="캘린더"
+                android:textColor="#2C2C5B"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/chosun_sg" />
+
+            <ImageButton
+                android:id="@+id/btn_go_calendar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_chip"
+                android:padding="8dp"
+                android:src="@android:drawable/ic_media_next"
+                android:contentDescription="캘린더 보기" />
+
+        </LinearLayout>
+
+        <!-- 미니 캘린더 카드 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:strokeColor="#DDD9F3"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <!-- 월 -->
+                <TextView
+                    android:id="@+id/tv_mini_year_month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="2026.05"
+                    android:textColor="#6667AB"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/chosun_sg"
+                    android:layout_marginBottom="10dp" />
+
+                <!-- 캘린더 -->
+                <GridLayout
+                    android:id="@+id/grid_mini_calendar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="7"
+                    android:useDefaultMargins="false">
+
+                    <!-- 요일 -->
+                    <TextView
+                        style="@style/MiniCalendarDayHeader"
+                        android:text="일"
+                        android:textColor="#E57373" />
+
+                    <TextView
+                        style="@style/MiniCalendarDayHeader"
+                        android:text="월" />
+
+                    <TextView
+                        style="@style/MiniCalendarDayHeader"
+                        android:text="화" />
+
+                    <TextView
+                        style="@style/MiniCalendarDayHeader"
+                        android:text="수" />
+
+                    <TextView
+                        style="@style/MiniCalendarDayHeader"
+                        android:text="목" />
+
+                    <TextView
+                        style="@style/MiniCalendarDayHeader"
+                        android:text="금" />
+
+                    <TextView
+                        style="@style/MiniCalendarDayHeader"
+                        android:text="토"
+                        android:textColor="#6667AB" />
+
+                </GridLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 로그아웃 버튼 -->
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="32dp"
+            android:text="로그아웃"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/chosun_sg"
+            android:backgroundTint="#6667AB" />
+
+    </LinearLayout>
+
+</ScrollView>

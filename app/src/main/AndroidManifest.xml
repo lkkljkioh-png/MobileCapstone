@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.TeamProject5">
+
+        <!-- 스플래시 → 앱 진입점 -->
+        <activity
+            android:name=".frontend.LoadingActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 로그인 -->
+        <activity
+            android:name=".frontend.LoginActivity"
+            android:exported="false" />
+
+        <!-- 회원가입 -->
+        <activity
+            android:name=".frontend.SignupActivity"
+            android:exported="false" />
+
+        <!-- 홈 -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
+        <!-- 자격증 / 캘린더 / MY 화면 -->
+        <activity android:name=".frontend.CertificateListActivity" />
+        <activity android:name=".frontend.CalendarActivity" />
+        <activity android:name=".frontend.MyActivity" />
+        <activity android:name=".frontend.FavoriteListActivity" />
+        <activity android:name=".frontend.CategoryListActivity" />
+        <activity android:name=".frontend.DetailActivity" />
+
+    </application>
+
+</manifest>
