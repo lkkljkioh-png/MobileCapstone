@@ -10,8 +10,8 @@
     android:layout_marginBottom="8dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="0dp"
-    app:cardBackgroundColor="@color/light_blue"
-    app:strokeColor="@color/stroke_gray"
+    app:cardBackgroundColor="#FFFFFF"
+    app:strokeColor="#DDD9F3"
     app:strokeWidth="1dp">
 
     <LinearLayout
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:textColor="#222222"
+                android:textColor="#2C2C5B"
                 android:maxLines="1"
                 android:ellipsize="end" />
 
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:textSize="12sp"
-                android:textColor="@color/maintext_black" />
+                android:textColor="#A49FC4" />
 
         </LinearLayout>
 
@@ -53,7 +53,7 @@
             android:layout_height="20dp"
             android:gravity="center"
             android:textSize="16sp"
-            android:textColor="@color/deco_violet"
+            android:textColor="#6667AB"
             android:text="♥"
             android:contentDescription="즐겨찾기" />
 
