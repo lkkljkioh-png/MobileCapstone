@@ -6,11 +6,9 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-import com.example.teamproject5.frontend.Certificate;
-
 @Entity(
         foreignKeys = @ForeignKey(
-                entity = Certificate.class,
+                entity = CertificateEntity.class,
                 parentColumns = "certId",
                 childColumns = "certId",
                 onDelete = CASCADE

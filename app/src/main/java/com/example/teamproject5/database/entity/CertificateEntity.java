@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class CertificateEntity {
 
     @PrimaryKey(autoGenerate = true)
-    public int certID;
+    public int certId;
 
     public String certName;             // 자격증 이름
     public String category;             // 자격증 분야

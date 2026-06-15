@@ -81,10 +81,10 @@ public class SignupActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email   = etEmail.getText().toString();
-                String name    = etName.getText().toString();
-                String pw      = etPw.getText().toString();
-                String pwCheck = etPwCheck.getText().toString();
+                String email   = etEmail.getText().toString().trim();
+                String name    = etName.getText().toString().trim();
+                String pw      = etPw.getText().toString().trim();
+                String pwCheck = etPwCheck.getText().toString().trim();
 
                 if (email.isEmpty() || name.isEmpty() || pw.isEmpty() || pwCheck.isEmpty()) {
                     Toast.makeText(SignupActivity.this, "모든 항목을 입력하세요", Toast.LENGTH_SHORT).show();
@@ -112,14 +112,6 @@ public class SignupActivity extends AppCompatActivity {
                 user.nickname = name;
 
                 database.userDao().insert(user);
-
-//                // 회원가입 완료 → 이름을 SharedPreferences에 임시 저장
-//                // 로그인 시 이 값을 우선 사용, 없으면 이메일 앞부분을 닉네임으로 사용
-//                // 백엔드 연동 시 서버 응답값으로 교체
-//                getSharedPreferences("user_prefs", MODE_PRIVATE)
-//                        .edit()
-//                        .putString("signup_name", name)
-//                        .apply();
 
                 Toast.makeText(SignupActivity.this, "회원가입 완료! 로그인 해주세요.", Toast.LENGTH_SHORT).show();
                 finish();
