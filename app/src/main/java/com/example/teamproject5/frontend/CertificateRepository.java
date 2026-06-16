@@ -1,7 +1,11 @@
 package com.example.teamproject5.frontend;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+
+import com.example.teamproject5.database.AppDatabase;
+import com.example.teamproject5.database.LicenseDatabase;
+import com.example.teamproject5.database.entity.CertificateEntity;
+import com.example.teamproject5.database.entity.FavoriteEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,63 +37,68 @@ import java.util.List;
 
 public class CertificateRepository {
 
-    private static final String PREF_NAME = "favorite_prefs";
-    private static final String KEY_PREFIX = "fav_";
+    private final LicenseDatabase licenseDb;
+    private final AppDatabase appDb;
 
-    private final SharedPreferences prefs;
+
 
     public CertificateRepository(Context context) {
-        this.prefs = context.getApplicationContext()
-                .getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        licenseDb = LicenseDatabase.getInstance(context);
+        appDb = AppDatabase.getInstance(context);
     }
+    public List<CertificateEntity> getFavoriteCertificates(int userId){
 
-    public List<Certificate> getCertificates() {
-        List<Certificate> list = new ArrayList<>(DummyData.getDummyCertificates());
+        List<Integer> ids = appDb.favoriteDao().getFavoriteIds(userId);
 
-        for (Certificate cert : list) {
-            boolean savedFav = prefs.getBoolean(KEY_PREFIX + cert.getId(), cert.isFavorite());
-            cert.setFavorite(savedFav);
+        List<CertificateEntity> result = new ArrayList<>();
+
+        for (int id : ids) {
+            CertificateEntity cert =
+                    licenseDb.certificateDao().getById(id); //
+            if (cert != null) result.add(cert);
         }
 
-        return list;
+        return result;
     }
 
-    public boolean toggleFavorite(Certificate certificate) {
-        boolean newState = !certificate.isFavorite();
-        certificate.setFavorite(newState);
-
-        prefs.edit()
-                .putBoolean(KEY_PREFIX + certificate.getId(), newState)
-                .apply();
-
-        return newState;
+    public List<CertificateEntity> getCertificates() {
+        return licenseDb.certificateDao().getAll();
     }
 
-    /**
-     * certId만으로 즐겨찾기 토글.
-     * DetailActivity처럼 Certificate 객체 없이 id만 아는 경우 사용.
-     * 백엔드 연동 시 여기에 서버 API 호출 추가.
-     *
-     * @return 변경된 즐겨찾기 상태 (true = 추가됨)
-     */
-    public boolean toggleFavoriteById(int id) {
-        boolean current = prefs.getBoolean(KEY_PREFIX + id, false);
-        boolean newState = !current;
-
-        prefs.edit()
-                .putBoolean(KEY_PREFIX + id, newState)
-                .apply();
-
-        // 백엔드 연동 시 여기에 서버 API 호출 추가
-        // ApiClient.updateFavorite(id, newState);
-
-        return newState;
+    // 검색
+    public List<CertificateEntity> search(String query, int w, int p) {
+        return licenseDb.certificateDao()
+                .searchCertificate(query,w,p);
     }
 
-    /**
-     * certId로 현재 즐겨찾기 상태 조회.
-     */
-    public boolean isFavoriteById(int id) {
-        return prefs.getBoolean(KEY_PREFIX + id, false);
+    public boolean toggleFavorite(int userId,int certId){
+
+        FavoriteEntity favorite =
+                appDb.favoriteDao().getFavorite(userId, certId);
+
+        if(favorite==null){
+
+            FavoriteEntity newFavorite =
+                    new FavoriteEntity();
+
+            newFavorite.userId=userId;
+            newFavorite.certId=certId;
+
+            appDb.favoriteDao().insert(newFavorite);
+
+            return true;
+        }
+
+        appDb.favoriteDao().delete(favorite);
+
+        return false;
+    }
+
+    public boolean isFavorite(int userId, int certId){
+
+        FavoriteEntity favorite =
+                appDb.favoriteDao().getFavorite(userId, certId);
+
+        return favorite != null;
     }
 }

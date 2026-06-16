@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teamproject5.R;
+import com.example.teamproject5.database.entity.CertificateEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,8 +41,9 @@ public class FavoriteListActivity extends AppCompatActivity
 
     private RecyclerView recyclerView;
     private CertificateAdapter adapter;
-    private List<Certificate> favoriteList;
+    private List<CertificateEntity> favoriteList;
     private CertificateRepository repository;
+    private int userId;
 
     // DetailActivity에서 돌아올 때 결과를 받기 위한 런처
     private final ActivityResultLauncher<Intent> detailLauncher =
@@ -60,6 +61,8 @@ public class FavoriteListActivity extends AppCompatActivity
         setContentView(R.layout.activity_favorite_list);
 
         repository = new CertificateRepository(this);
+
+        userId = getSharedPreferences("user_prefs", MODE_PRIVATE).getInt("user_id", 0);
 
         initViews();
         loadFavoriteCertificates();
@@ -81,55 +84,44 @@ public class FavoriteListActivity extends AppCompatActivity
     }
 
     private void loadFavoriteCertificates() {
-        List<Certificate> allList = repository.getCertificates();
-        favoriteList = new ArrayList<>();
 
-        for (Certificate cert : allList) {
-            if (cert.isFavorite()) {
-                favoriteList.add(cert);
-            }
-        }
+        favoriteList = repository.getFavoriteCertificates(userId);
 
-        adapter = new CertificateAdapter(favoriteList, this);
+        adapter = new CertificateAdapter(this, favoriteList, this, userId
+        );
+
         recyclerView.setAdapter(adapter);
     }
 
     private void refreshFavoriteList() {
-        List<Certificate> allList = repository.getCertificates();
         favoriteList.clear();
-
-        for (Certificate cert : allList) {
-            if (cert.isFavorite()) {
-                favoriteList.add(cert);
-            }
-        }
-
+        favoriteList.addAll(repository.getFavoriteCertificates(userId));
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onFavoriteClick(Certificate certificate, int position) {
-        boolean newState = repository.toggleFavorite(certificate);
+    public void onFavoriteClick(CertificateEntity certificate, int position) {
+        boolean newState = repository.toggleFavorite(userId, certificate.certId);
 
         if (newState) {
             // 즐겨찾기 추가 - 아이템 갱신
             adapter.updateItem(position);
-            Toast.makeText(this, certificate.getName() + " " + getString(R.string.favorite_added), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, certificate.certName + " " + getString(R.string.favorite_added), Toast.LENGTH_SHORT).show();
         } else {
             // 즐겨찾기 해제 - 목록에서 즉시 제거 (방어 코드 추가)
             if (position >= 0 && position < favoriteList.size()) {
                 favoriteList.remove(position);
                 adapter.notifyItemRemoved(position);
             }
-            Toast.makeText(this, certificate.getName() + " " + getString(R.string.favorite_removed), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, certificate.certName + " " + getString(R.string.favorite_removed), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
-    public void onDetailClick(Certificate certificate) {
+    public void onDetailClick(CertificateEntity certificate) {
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra("cert_name", certificate.getName());
-        intent.putExtra("cert_id", certificate.getId());
+        intent.putExtra("cert_name", certificate.certName);
+        intent.putExtra("cert_id", certificate.certId);
         // startActivity() 대신 detailLauncher로 실행 → 돌아올 때 리스트 자동 갱신
         detailLauncher.launch(intent);
     }

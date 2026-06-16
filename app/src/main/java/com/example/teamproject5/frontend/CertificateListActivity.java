@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teamproject5.R;
+import com.example.teamproject5.database.entity.CertificateEntity;
 
 import java.util.List;
 
@@ -42,8 +43,10 @@ public class CertificateListActivity extends AppCompatActivity
 
     private RecyclerView recyclerView;
     private CertificateAdapter adapter;
-    private List<Certificate> certificateList;
+    private List<CertificateEntity> certificateList;
     private CertificateRepository repository;
+
+    private int userId;
 
     // DetailActivity에서 돌아올 때 결과를 받기 위한 런처
     private final ActivityResultLauncher<Intent> detailLauncher =
@@ -61,6 +64,7 @@ public class CertificateListActivity extends AppCompatActivity
         setContentView(R.layout.activity_certificate_list);
 
         repository = new CertificateRepository(this);
+        userId = getSharedPreferences("user_prefs", MODE_PRIVATE).getInt("user_id", 0);
 
         initViews();
         loadCertificates();
@@ -83,27 +87,30 @@ public class CertificateListActivity extends AppCompatActivity
 
     private void loadCertificates() {
         certificateList = repository.getCertificates();
-        adapter = new CertificateAdapter(certificateList, this);
+
+        adapter = new CertificateAdapter(this, certificateList, this, userId);
+
         recyclerView.setAdapter(adapter);
     }
 
     @Override
-    public void onFavoriteClick(Certificate certificate, int position) {
-        boolean newState = repository.toggleFavorite(certificate);
+    public void onFavoriteClick(CertificateEntity certificate, int position) {
+
+        boolean newState = repository.toggleFavorite(userId, certificate.certId);
         adapter.updateItem(position);
 
         String message = newState
-                ? certificate.getName() + " " + getString(R.string.favorite_added)
-                : certificate.getName() + " " + getString(R.string.favorite_removed);
+                ? certificate.certName + " " + getString(R.string.favorite_added)
+                : certificate.certName + " " + getString(R.string.favorite_removed);
 
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onDetailClick(Certificate certificate) {
+    public void onDetailClick(CertificateEntity certificate) {
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra("cert_name", certificate.getName());
-        intent.putExtra("cert_id", certificate.getId());
+        intent.putExtra("cert_name", certificate.certName);
+        intent.putExtra("cert_id", certificate.certId);
 
         // startActivity() 대신 detailLauncher로 실행 → 돌아올 때 아이콘 자동 갱신
         detailLauncher.launch(intent);

@@ -2,6 +2,7 @@ package com.example.teamproject5.frontend;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.GridLayout;
@@ -13,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.teamproject5.R;
+import com.example.teamproject5.database.AppDatabase;
+import com.example.teamproject5.database.entity.CertificateEntity;
+import com.example.teamproject5.database.entity.UserEntity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -51,8 +55,12 @@ public class MyActivity extends AppCompatActivity {
     // ── Data ───────────────────────────────────────────────────────────────
     private CertificateRepository repository;
 
+    private AppDatabase appDb;
+
     /** key: "yyyy-MM-dd", value: 즐겨찾기 자격증 리스트 */
-    private Map<String, List<Certificate>> favoriteDateMap;
+    private Map<String, List<CertificateEntity>> favoriteDateMap;
+
+    private int userId;
 
     // ── Lifecycle ──────────────────────────────────────────────────────────
 
@@ -60,6 +68,10 @@ public class MyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+
+        appDb = AppDatabase.getInstance(this);
+
+        userId = getSharedPreferences("user_prefs", MODE_PRIVATE).getInt("user_id", 0);
 
         initViews();
         initData();
@@ -101,15 +113,18 @@ public class MyActivity extends AppCompatActivity {
     private void buildFavoriteDateMap() {
         favoriteDateMap = new HashMap<>();
 
-        List<Certificate> allList = repository.getCertificates();
-        for (Certificate cert : allList) {
-            if (cert.isFavorite() && cert.getExamDate() != null) {
-                List<Certificate> certsOnDate = favoriteDateMap.get(cert.getExamDate());
+        List<CertificateEntity> favoriteList = repository.getFavoriteCertificates(userId);
+        Log.d("DEBUG", "userId = " + userId);
+        Log.d("DEBUG", "favoriteIds = " + appDb.favoriteDao().getFavoriteIds(userId));
+        Log.d("DEBUG", "joined size = " + repository.getFavoriteCertificates(userId).size());
+        for (CertificateEntity cert : favoriteList) {
+            if (cert.exdate != null) {
+                List<CertificateEntity> certsOnDate = favoriteDateMap.get(cert.exdate);
                 if (certsOnDate == null) {
                     certsOnDate = new ArrayList<>();
                 }
                 certsOnDate.add(cert);
-                favoriteDateMap.put(cert.getExamDate(), certsOnDate);
+                favoriteDateMap.put(cert.exdate, certsOnDate);
             }
         }
     }
@@ -136,8 +151,7 @@ public class MyActivity extends AppCompatActivity {
                         getSharedPreferences("user_prefs", MODE_PRIVATE)
                                 .edit()
                                 .putBoolean("is_logged_in", false)
-                                .putString("user_name", "")
-                                .putString("signup_name", "")
+                                .remove("user_id")
                                 .apply();
 
                         // 로그인 화면으로 이동 (백스택 전부 제거)
@@ -164,11 +178,13 @@ public class MyActivity extends AppCompatActivity {
      * 백엔드 연동 시: 사용자 프로필 API 응답값으로 교체하세요.
      */
     private void renderUserName() {
-        // 현재는 SharedPreferences에 저장된 로그인 이름 사용
-        // 백엔드 연동 시 사용자 프로필 API 응답값으로 교체
-        String userName = getSharedPreferences("user_prefs", MODE_PRIVATE)
-                .getString("user_name", "사용자");
-        tvUserName.setText(userName + " 님");
+        UserEntity user = appDb.userDao().getUser(userId);
+
+        if (user != null) {
+            tvUserName.setText(user.nickname + " 님");
+        } else {
+            tvUserName.setText("사용자 님");
+        }
     }
 
     /**
@@ -176,15 +192,7 @@ public class MyActivity extends AppCompatActivity {
      * 추후 보완 예정
      */
     private void renderFavoriteList() {
-        List<Certificate> allList = repository.getCertificates();
-        List<Certificate> favorites = new ArrayList<>();
-
-        for (Certificate cert : allList) {
-            if (cert.isFavorite()) {
-                favorites.add(cert);
-                if (favorites.size() >= MAX_FAVORITE_DISPLAY) break;
-            }
-        }
+        List<CertificateEntity> favorites = repository.getFavoriteCertificates(userId);
 
         layoutFavoriteList.removeAllViews();
 
@@ -198,25 +206,32 @@ public class MyActivity extends AppCompatActivity {
             return;
         }
 
-        for (Certificate cert : favorites) {
+        int count = 0;
+
+        for (CertificateEntity cert : favorites) {
+
+            if (count >= MAX_FAVORITE_DISPLAY)
+                break;
+
             View itemView = LayoutInflater.from(this)
                     .inflate(R.layout.item_my_favorite, layoutFavoriteList, false);
 
             TextView tvName     = itemView.findViewById(R.id.tv_fav_name);
             TextView tvCategory = itemView.findViewById(R.id.tv_fav_category);
 
-            tvName.setText(cert.getName());
-            tvCategory.setText(CategoryUtils.toLabel(cert.getCategory()));
+            tvName.setText(cert.certName);
+            tvCategory.setText(CategoryUtils.toLabel(cert.category));
 
             // 즐겨찾기 카드 클릭 → DetailActivity로 이동
             itemView.setOnClickListener(v -> {
                 android.content.Intent intent = new android.content.Intent(MyActivity.this, DetailActivity.class);
-                intent.putExtra("cert_name", cert.getName());
-                intent.putExtra("cert_id", cert.getId());
+                intent.putExtra("cert_name", cert.certName);
+                intent.putExtra("cert_id", cert.certId);
                 startActivity(intent);
             });
 
             layoutFavoriteList.addView(itemView);
+            count++;
         }
     }
 

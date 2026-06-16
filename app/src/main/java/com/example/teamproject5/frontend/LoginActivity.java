@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.teamproject5.MainActivity;
 import com.example.teamproject5.R;
+import com.example.teamproject5.database.AppDatabase;
+import com.example.teamproject5.database.entity.UserEntity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -19,10 +21,14 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin;
     TextView tvSignup;
 
+    private AppDatabase appDb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        appDb = AppDatabase.getInstance(LoginActivity.this);
 
         etId     = findViewById(R.id.et_id);
         etPw     = findViewById(R.id.et_pw);
@@ -41,19 +47,20 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                // 이름 결정: 회원가입 때 입력한 이름 우선, 없으면 이메일 앞부분을 닉네임으로 사용
-                // 백엔드 연동 시 서버 응답의 사용자 이름으로 교체
-                String signupName = getSharedPreferences("user_prefs", MODE_PRIVATE)
-                        .getString("signup_name", "");
-                String displayName;
-                if (!signupName.isEmpty()) {
-                    displayName = signupName;
-                } else {
-                    displayName = id.contains("@") ? id.split("@")[0] : id;
+                UserEntity user = appDb.userDao().login(id, pw);
+
+                if (user == null) {
+                    Toast.makeText(
+                            LoginActivity.this,
+                            "아이디 또는 비밀번호가 틀렸습니다.",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                    return;
                 }
+
                 getSharedPreferences("user_prefs", MODE_PRIVATE)
                         .edit()
-                        .putString("user_name", displayName)
+                        .putInt("user_id", user.userID)
                         .putBoolean("is_logged_in", true)
                         .apply();
 

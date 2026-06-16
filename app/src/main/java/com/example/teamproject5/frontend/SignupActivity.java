@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.teamproject5.R;
+import com.example.teamproject5.database.AppDatabase;
+import com.example.teamproject5.database.entity.UserEntity;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -21,10 +23,14 @@ public class SignupActivity extends AppCompatActivity {
     CheckBox checkBox;
     Button btnSignup;
 
+    private AppDatabase appDb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        appDb = AppDatabase.getInstance(this);
 
         etEmail   = findViewById(R.id.user_id);
         etName    = findViewById(R.id.user_name);
@@ -92,14 +98,21 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(SignupActivity.this, "개인정보 동의가 필요합니다", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (appDb.userDao().checkEmail(email) != null) {
+                    Toast.makeText(
+                            SignupActivity.this,
+                            "이미 가입된 이메일입니다.",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                    return;
+                }
 
-                // 회원가입 완료 → 이름을 SharedPreferences에 임시 저장
-                // 로그인 시 이 값을 우선 사용, 없으면 이메일 앞부분을 닉네임으로 사용
-                // 백엔드 연동 시 서버 응답값으로 교체
-                getSharedPreferences("user_prefs", MODE_PRIVATE)
-                        .edit()
-                        .putString("signup_name", name)
-                        .apply();
+                UserEntity user = new UserEntity();
+                user.email = email;
+                user.nickname = name;
+                user.password = pw;
+
+                appDb.userDao().insert(user);
 
                 Toast.makeText(SignupActivity.this, "회원가입 완료! 로그인 해주세요.", Toast.LENGTH_SHORT).show();
                 finish();

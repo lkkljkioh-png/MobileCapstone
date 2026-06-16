@@ -6,6 +6,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.teamproject5.R;
+import com.example.teamproject5.database.entity.CertificateEntity;
 
 /**
  * 자격증 상세 정보 Activity
@@ -44,6 +45,7 @@ public class DetailActivity extends AppCompatActivity {
 
     String certName;
     int certId;
+    int userId;
 
     CertificateRepository repository;
 
@@ -54,6 +56,7 @@ public class DetailActivity extends AppCompatActivity {
 
         certName = getIntent().getStringExtra("cert_name");
         certId   = getIntent().getIntExtra("cert_id", -1);
+        userId = getSharedPreferences("user_prefs", MODE_PRIVATE).getInt("user_id", 0);
 
         repository = new CertificateRepository(this);
 
@@ -79,8 +82,10 @@ public class DetailActivity extends AppCompatActivity {
 
         heartBtn.setOnClickListener(v -> {
             if (certId == -1) return;
-            repository.toggleFavoriteById(certId);
+            repository.toggleFavorite(userId, certId);
             updateHeartUI();
+
+            setResult(RESULT_OK);
         });
 
         setTabUI(infoTab);
@@ -108,7 +113,7 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
         // certId로 직접 조회, 객체 생성 없음
-        heartBtn.setText(repository.isFavoriteById(certId) ? "♥" : "♡");
+        heartBtn.setText(repository.isFavorite(userId, certId) ? "♥" : "♡");
     }
 
     void setTabUI(TextView selected) {
@@ -132,11 +137,11 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
 
-        for (Certificate cert : repository.getCertificates()) {
-            if (cert.getId() == certId) {
-                descText.setText(cert.getDescription());
-                qualText.setText("백엔드 연동 후 표시");
-                jobText.setText("백엔드 연동 후 표시");
+        for (CertificateEntity cert : repository.getCertificates()) {
+            if (cert.certId == certId) {
+                descText.setText(cert.note);
+                qualText.setText(cert.qualification);
+                jobText.setText("db 테이블에 도움 진로가 없음");
                 return;
             }
         }

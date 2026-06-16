@@ -1,5 +1,6 @@
 package com.example.teamproject5.frontend;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teamproject5.R;
 import com.example.teamproject5.database.AppDatabase;
+import com.example.teamproject5.database.entity.CertificateEntity;
 import com.example.teamproject5.database.entity.RecentCertificateEntity;
 
 import java.util.List;
@@ -43,16 +45,20 @@ import java.util.List;
 public class CertificateAdapter extends RecyclerView.Adapter<CertificateAdapter.ViewHolder> {
 
     public interface OnCertificateActionListener {
-        void onFavoriteClick(Certificate certificate, int position);
-        void onDetailClick(Certificate certificate);
+        void onFavoriteClick(CertificateEntity certificate, int position);
+        void onDetailClick(CertificateEntity certificate);
     }
 
-    private final List<Certificate> certificateList;
+    private final List<CertificateEntity> certificateList;
     private final OnCertificateActionListener listener;
+    private CertificateRepository repository;
+    private int userId;
 
-    public CertificateAdapter(List<Certificate> certificateList, OnCertificateActionListener listener) {
+    public CertificateAdapter(Context context, List<CertificateEntity> certificateList, OnCertificateActionListener listener, int userId) {
         this.certificateList = certificateList;
         this.listener = listener;
+        this.userId = userId;
+        repository = new CertificateRepository(context);
     }
 
     @NonNull
@@ -67,17 +73,24 @@ public class CertificateAdapter extends RecyclerView.Adapter<CertificateAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
 
-        Certificate item = certificateList.get(position);
+        CertificateEntity item = certificateList.get(position);
 
-        holder.tvName.setText(item.getName());
-        holder.tvDescription.setText(item.getDescription());
-        holder.tvCategory.setText(CategoryUtils.toLabel(item.getCategory()));
-        updateFavoriteIcon(holder.btnFavorite, item.isFavorite());
+        holder.tvName.setText(item.certName);
+        holder.tvDescription.setText(item.note);
+        holder.tvCategory.setText(CategoryUtils.toLabel(item.category));
+        boolean favorite = repository.isFavorite(userId, item.certId);
+
+        updateFavoriteIcon(holder.btnFavorite, favorite);
 
         holder.btnFavorite.setOnClickListener(v -> {
             int currentPosition = holder.getBindingAdapterPosition();
-            if (currentPosition != RecyclerView.NO_POSITION && listener != null) {
-                listener.onFavoriteClick(certificateList.get(currentPosition), currentPosition);
+
+            if(currentPosition != RecyclerView.NO_POSITION
+                    && listener != null){
+
+                listener.onFavoriteClick(
+                        certificateList.get(currentPosition),
+                        currentPosition);
             }
         });
 
@@ -87,19 +100,19 @@ public class CertificateAdapter extends RecyclerView.Adapter<CertificateAdapter.
 
             if (currentPosition != RecyclerView.NO_POSITION && listener != null) {
 
-                Certificate selectedCertificate =
+                CertificateEntity selectedCertificate =
                         certificateList.get(currentPosition);
 
                 RecentCertificateEntity entity =
                         new RecentCertificateEntity();
 
                 entity.certificateName =
-                        selectedCertificate.getName();
+                        selectedCertificate.certName;
 
                 entity.viewTime =
                         System.currentTimeMillis();
 
-                AppDatabase.getDB(v.getContext())
+                AppDatabase.getInstance(v.getContext())
                         .recentCertificateDAO()
                         .insert(entity);
 

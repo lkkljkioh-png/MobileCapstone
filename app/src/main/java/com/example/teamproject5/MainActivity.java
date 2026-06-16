@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         for(ScheduleEntity s:list) {
             Log.d("ROOM_TEST", s.scheduleDate + "/" + s.scheduleTitle); */
 
-        db = AppDatabase.getDB(this);
+        db = AppDatabase.getInstance(this);
 
         recentRecyclerView = findViewById(R.id.recentRecyclerView);
 

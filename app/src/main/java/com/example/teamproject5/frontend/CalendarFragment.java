@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.teamproject5.R;
 import com.example.teamproject5.database.AppDatabase;
+import com.example.teamproject5.database.entity.CertificateEntity;
 import com.example.teamproject5.database.entity.ScheduleEntity;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class CalendarFragment extends Fragment {
 
     // ── Data ──
     private Calendar currentCalendar;
-    private Map<String, List<Certificate>> favoriteDateMap;
+    private Map<String, List<CertificateEntity>> favoriteDateMap;
 
     private CertificateRepository repository;
     private AppDatabase db;
@@ -93,7 +94,7 @@ public class CalendarFragment extends Fragment {
 
         currentCalendar = Calendar.getInstance();
 
-        db = AppDatabase.getDB(requireContext());
+        db = AppDatabase.getInstance(requireContext());
 
         loadFavoriteCertificates();
     }
@@ -102,12 +103,12 @@ public class CalendarFragment extends Fragment {
 
         favoriteDateMap = new HashMap<>();
 
-        for (Certificate cert : repository.getCertificates()) {
+        for (CertificateEntity cert : repository.getCertificates()) {
 
-            if (cert.isFavorite() && cert.getExamDate() != null) {
+            if (cert.exdate != null) {
 
                 favoriteDateMap
-                        .computeIfAbsent(cert.getExamDate(),
+                        .computeIfAbsent(cert.exdate,
                                 k -> new ArrayList<>())
                         .add(cert);
             }
@@ -167,7 +168,7 @@ public class CalendarFragment extends Fragment {
                     String.format("%04d-%02d-%02d",
                             year, month, day);
 
-            List<Certificate> certs =
+            List<CertificateEntity> certs =
                     favoriteDateMap.get(dateKey);
 
             List<ScheduleEntity> schedules =
@@ -210,7 +211,7 @@ public class CalendarFragment extends Fragment {
     private void addDayCell(int day,
                             boolean hasAny,
                             String dateKey,
-                            List<Certificate> certs,
+                            List<CertificateEntity> certs,
                             List<ScheduleEntity> schedules) {
 
         View cell =
@@ -272,7 +273,7 @@ public class CalendarFragment extends Fragment {
 
     private void showAllForDate(String dateKey) {
 
-        List<Certificate> certs =
+        List<CertificateEntity> certs =
                 favoriteDateMap.get(dateKey);
 
         List<ScheduleEntity> schedules =
@@ -294,11 +295,11 @@ public class CalendarFragment extends Fragment {
         // 자격증 목록
         if (certs != null && !certs.isEmpty()) {
 
-            for (Certificate c : certs) {
+            for (CertificateEntity c : certs) {
 
                 TextView tv = new TextView(requireContext());
 
-                tv.setText("📘 " + c.getName());
+                tv.setText("📘 " + c.certName);
 
                 tv.setPadding(0, 8, 0, 8);
 

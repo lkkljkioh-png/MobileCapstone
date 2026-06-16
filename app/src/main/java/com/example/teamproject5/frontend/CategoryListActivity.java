@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teamproject5.R;
+import com.example.teamproject5.database.entity.CertificateEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class CategoryListActivity extends AppCompatActivity
 
     private RecyclerView recyclerView;
     private CertificateAdapter adapter;
-    private List<Certificate> categoryList;
+    private List<CertificateEntity> categoryList;
     private CertificateRepository repository;
 
     @Override
@@ -79,18 +80,19 @@ public class CategoryListActivity extends AppCompatActivity
      * 백엔드 연동 시 이 메서드를 수정하세요.
      */
     private void loadCertificatesByCategory(String categoryId) {
-        List<Certificate> allList = repository.getCertificates();
+        List<CertificateEntity> allList = repository.getCertificates();
         categoryList = new ArrayList<>();
 
         if (categoryId != null) {
-            for (Certificate cert : allList) {
-                if (categoryId.equals(cert.getCategory())) {
+            for (CertificateEntity cert : allList) {
+                if (categoryId.equals(cert.category)) {
                     categoryList.add(cert);
                 }
             }
         }
+        int userId = getSharedPreferences("user_prefs", MODE_PRIVATE).getInt("user_id", 0);
 
-        adapter = new CertificateAdapter(categoryList, this);
+        adapter = new CertificateAdapter(this, categoryList, this, userId);
         recyclerView.setAdapter(adapter);
     }
 
@@ -111,22 +113,23 @@ public class CategoryListActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFavoriteClick(Certificate certificate, int position) {
-        boolean newState = repository.toggleFavorite(certificate);
+    public void onFavoriteClick(CertificateEntity certificate, int position) {
+        int userId = getSharedPreferences("user_prefs", MODE_PRIVATE).getInt("user_id",0);
+        boolean newState = repository.toggleFavorite(userId, certificate.certId);
         adapter.updateItem(position);
 
         String message = newState
-                ? certificate.getName() + " " + getString(R.string.favorite_added)
-                : certificate.getName() + " " + getString(R.string.favorite_removed);
+                ? certificate.certName + " " + getString(R.string.favorite_added)
+                : certificate.certName + " " + getString(R.string.favorite_removed);
 
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onDetailClick(Certificate certificate) {
+    public void onDetailClick(CertificateEntity certificate) {
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra("cert_name", certificate.getName());
-        intent.putExtra("cert_id", certificate.getId());
+        intent.putExtra("cert_name", certificate.certName);
+        intent.putExtra("cert_id", certificate.certId);
         startActivity(intent);
     }
 }
