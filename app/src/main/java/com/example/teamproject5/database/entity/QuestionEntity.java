@@ -1,27 +1,18 @@
 package com.example.teamproject5.database.entity;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(
-        foreignKeys = @ForeignKey(
-                entity = CertificateEntity.class,
-                parentColumns = "certId",
-                childColumns = "certId",
-                onDelete = CASCADE
-        )
-)
-
+@Entity
 public class QuestionEntity {
 
     @PrimaryKey(autoGenerate = true)
     public int questionId;
-
     public int certId;
-
     public String question;
     public String option1;
     public String option2;

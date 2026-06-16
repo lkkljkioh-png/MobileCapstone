@@ -14,6 +14,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.teamproject5.R;
+import com.example.teamproject5.database.AppDatabase;
+import com.example.teamproject5.database.LicenseDatabase;
 
 /**
  * 홈 화면 Activity
@@ -58,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        LicenseDatabase db = LicenseDatabase.getInstance(this);
+
+        // 테스트용
+        new Thread(() -> {
+            db.certificateDao().getAll();
+        }).start();
 
 
         // 뷰 연결
