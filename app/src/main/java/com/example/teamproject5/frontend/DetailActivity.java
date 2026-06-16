@@ -41,7 +41,7 @@ public class DetailActivity extends AppCompatActivity {
 
     TextView title, cardTitle, backBtn, heartBtn;
     TextView infoTab, qTab, mockTab;
-    TextView descText, qualText, jobText;
+    TextView descText, qualText, exdateText;
 
     String certName;
     int certId;
@@ -71,7 +71,7 @@ public class DetailActivity extends AppCompatActivity {
 
         descText = findViewById(R.id.desc_text);
         qualText = findViewById(R.id.qual_text);
-        jobText  = findViewById(R.id.job_text);
+        exdateText  = findViewById(R.id.exdate_text);
 
         title.setText(certName);
         cardTitle.setText(certName);
@@ -133,7 +133,7 @@ public class DetailActivity extends AppCompatActivity {
         if (certId == -1) {
             descText.setText(certName);
             qualText.setText("");
-            jobText.setText("");
+            exdateText.setText("");
             return;
         }
 
@@ -141,25 +141,25 @@ public class DetailActivity extends AppCompatActivity {
             if (cert.certId == certId) {
                 descText.setText(cert.note);
                 qualText.setText(cert.qualification);
-                jobText.setText("db 테이블에 도움 진로가 없음");
+                exdateText.setText(cert.exdate);
                 return;
             }
         }
 
         descText.setText(certName);
         qualText.setText("");
-        jobText.setText("");
+        exdateText.setText("");
     }
 
     void setQuestionContent() {
         descText.setText("기출문제 준비중");
         qualText.setText("");
-        jobText.setText("");
+        exdateText.setText("");
     }
 
     void setMockContent() {
         descText.setText("모의고사 준비중");
         qualText.setText("");
-        jobText.setText("");
+        exdateText.setText("");
     }
 }

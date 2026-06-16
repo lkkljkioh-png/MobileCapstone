@@ -164,20 +164,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="📌 도움 진로"
+                    android:text="📌 유효 기간"
                     android:textStyle="bold"
                     android:textColor="#6667AB"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/chosun_sg" />
 
                 <TextView
-                    android:id="@+id/job_text"
+                    android:id="@+id/exdate_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="진로 내용"
+                    android:text="유효 기간"
                     android:textColor="#333333"
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/chosun_sg" />
+
+
 
             </LinearLayout>
         </ScrollView>

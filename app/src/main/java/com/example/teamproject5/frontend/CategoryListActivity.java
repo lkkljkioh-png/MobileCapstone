@@ -84,13 +84,19 @@ public class CategoryListActivity extends AppCompatActivity
         categoryList = new ArrayList<>();
 
         if (categoryId != null) {
+
+            List<String> dbCategories =
+                    CategoryUtils.getDbCategories(categoryId);
+
             for (CertificateEntity cert : allList) {
-                if (categoryId.equals(cert.category)) {
+                if (dbCategories.contains(cert.category)) {
                     categoryList.add(cert);
                 }
             }
         }
-        int userId = getSharedPreferences("user_prefs", MODE_PRIVATE).getInt("user_id", 0);
+
+        int userId = getSharedPreferences("user_prefs", MODE_PRIVATE)
+                .getInt("user_id", 0);
 
         adapter = new CertificateAdapter(this, categoryList, this, userId);
         recyclerView.setAdapter(adapter);
